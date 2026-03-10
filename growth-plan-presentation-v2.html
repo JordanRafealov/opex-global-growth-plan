@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpEx Global Growth Plan v2 | Dopamine Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0c0c14;
+  --card: #16162a;
+  --card-border: rgba(255,255,255,0.08);
+  --accent: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.15);
+  --green: #22c55e;
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --text: #f0f0f5;
+  --text-secondary: #a0a0b8;
+  --radius: 16px;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 19px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.deck { width: 100%; height: 100%; position: relative; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+  overflow-y: auto;
+  padding: 50px 40px 80px;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+.slide.center-v .slide-inner { min-height: calc(100vh - 130px); justify-content: center; }
+
+.slide::-webkit-scrollbar { width: 6px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 3px; }
+
+.slide-inner {
+  width: 100%;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5 { font-family: 'Inter', sans-serif; font-weight: 700; line-height: 1.15; }
+h1 { font-size: 52px; letter-spacing: -0.02em; margin-bottom: 16px; text-wrap: balance; }
+h2 { font-size: 44px; letter-spacing: -0.02em; margin-bottom: 16px; }
+h3 { font-size: 28px; margin-bottom: 12px; }
+h4 { font-size: 22px; margin-bottom: 8px; font-weight: 600; }
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.subtitle { font-size: 22px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; font-weight: 400; text-align: center; }
+
+.playfair-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.text-secondary { color: var(--text-secondary); }
+.text-accent { color: var(--accent); }
+.text-green { color: var(--green); }
+.text-red { color: var(--red); }
+.text-amber { color: var(--amber); }
+strong { font-weight: 700; }
+s { color: var(--text-secondary); text-decoration: line-through; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 36px;
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+.card:hover {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+.card-sm { padding: 24px; }
+.card-red { border-color: rgba(239,68,68,0.25); background: rgba(239,68,68,0.05); }
+.card-green { border-color: rgba(34,197,94,0.25); background: rgba(34,197,94,0.05); }
+.card-violet { border-color: rgba(124,58,237,0.35); background: rgba(124,58,237,0.06); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+
+.bullet-list { list-style: none; padding: 0; }
+.bullet-list li {
+  padding: 10px 0 10px 28px;
+  position: relative;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 18px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.bullet-list.green li::before { background: var(--green); }
+.bullet-list.red li::before { background: var(--red); }
+.bullet-list.amber li::before { background: var(--amber); }
+
+.check-list, .x-list { list-style: none; padding: 0; }
+.check-list li, .x-list li {
+  padding: 8px 0 8px 32px;
+  position: relative;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.check-list li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0; top: 8px;
+  color: var(--green);
+  font-weight: 700;
+}
+.x-list li::before {
+  content: '\2717';
+  position: absolute;
+  left: 0; top: 8px;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.proof-img {
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  display: block;
+  width: 100%;
+}
+.img-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.img-row img { width: 100%; max-width: 100%; }
+
+.video-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: #000;
+}
+.video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+.quote-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+}
+.quote-card p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.gap-section { margin-bottom: 24px; }
+.gap-section h4 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.gap-section p { font-size: 17px; color: var(--text-secondary); line-height: 1.6; }
+
+.question-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.question-list li {
+  padding: 14px 16px 14px 40px;
+  position: relative;
+  font-size: 16px;
+  line-height: 1.5;
+  font-style: italic;
+  background: rgba(124,58,237,0.06);
+  border: 1px solid rgba(124,58,237,0.15);
+  border-radius: 10px;
+}
+.question-list li::before {
+  content: '?';
+  position: absolute;
+  left: 14px; top: 14px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 18px;
+  font-style: normal;
+}
+
+.stat { text-align: center; padding: 28px 20px; }
+.stat .num { font-size: 48px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 8px; }
+.stat .label { font-size: 16px; color: var(--text-secondary); line-height: 1.4; }
+
+.value-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.value-line:last-child { border-bottom: none; }
+
+.pricing-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 36px;
+  text-align: center;
+  position: relative;
+}
+.pricing-card.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 40px rgba(124,58,237,0.12);
+}
+.pricing-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 5px 20px;
+  border-radius: 20px;
+}
+.price-big { font-size: 52px; font-weight: 700; margin: 16px 0 8px; }
+.price-strike { font-size: 24px; color: var(--text-secondary); text-decoration: line-through; }
+
+details {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+details summary {
+  padding: 18px 24px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+details summary::-webkit-details-marker { display: none; }
+details summary::before {
+  content: '\25B6';
+  font-size: 12px;
+  color: var(--accent);
+  transition: transform 200ms ease;
+  flex-shrink: 0;
+}
+details[open] summary::before { transform: rotate(90deg); }
+details .detail-body {
+  padding: 0 24px 20px 48px;
+}
+details .detail-body li {
+  font-size: 16px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  line-height: 1.5;
+  list-style: none;
+}
+details .detail-body ul { list-style: none; padding: 0; }
+
+.glow-card {
+  background: linear-gradient(135deg, rgba(124,58,237,0.12) 0%, rgba(34,197,94,0.08) 100%);
+  border: 1px solid rgba(124,58,237,0.3);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(124,58,237,0.08);
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 2px;
+  margin: 0 auto 32px;
+}
+
+.solve-box {
+  background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(124,58,237,0.06) 100%);
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-top: 24px;
+}
+.solve-box h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.solve-box p {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.faq-item summary {
+  padding: 14px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  color: var(--text-secondary);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::before {
+  content: '+';
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+.faq-item[open] summary::before { content: '\2212'; }
+.faq-item[open] summary { color: var(--text); }
+.faq-item .faq-body {
+  padding: 0 20px 16px 40px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.nav-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(12,12,20,0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  z-index: 100;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 200ms ease;
+  flex-shrink: 0;
+}
+.nav-dot.active { background: var(--accent); transform: scale(1.3); }
+.nav-counter {
+  position: fixed;
+  bottom: 54px;
+  right: 40px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  z-index: 100;
+  font-variant-numeric: tabular-nums;
+}
+
+.mb-4 { margin-bottom: 4px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-20 { margin-bottom: 20px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+.mb-40 { margin-bottom: 40px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mt-20 { margin-top: 20px; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.small { font-size: 14px; }
+.muted { color: var(--text-secondary); opacity: 0.6; }
+
+@media (max-width: 1024px) {
+  .slide { padding: 40px 24px 80px; }
+  h1 { font-size: 40px; }
+  h2 { font-size: 36px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide center-v active" data-slide="1">
+<div class="slide-inner text-center" style="justify-content:center; min-height:100%; display:flex; flex-direction:column;">
+  <img src="assets/dd-logo-white.png" alt="Dopamine Digital" style="height:48px; margin:0 auto 20px;">
+  <p class="eyebrow mb-24" style="font-size:15px; letter-spacing:0.2em;">DOPAMINE DIGITAL</p>
+  <h1 style="font-size:46px; margin-bottom:20px;">How We Will Help Paul from OpEx Global Build a <span class="text-accent">&pound;500K+ Pipeline</span> of Private Equity Clients</h1>
+  <p class="subtitle text-center" style="max-width:900px; margin:0 auto 40px;">A 90-day growth engine to make you the first name private equity operating partners call when they need operational excellence expertise.</p>
+  <p class="playfair-quote" style="max-width:700px; margin:0 auto 40px; font-size:20px;">"Built specifically for Paul Ruggier &amp; OpEx Global"</p>
+  <p class="small muted">March 2026</p>
+</div>
+</div>
+
+<!-- SLIDE 2: DISCOVERY RECAP -->
+<div class="slide center-v" data-slide="2">
+<div class="slide-inner">
+  <h2 class="text-center mb-8">&#x1F50D; What We Learned About Your Business</h2>
+  <p class="subtitle text-center mb-32">From our discovery call and podcast conversation, here is what stood out.</p>
+  <div class="grid-2">
+    <div class="card" style="border-color:rgba(34,197,94,0.2);">
+      <h4 class="text-green mb-16">&#x2705; Your Strengths</h4>
+      <ul class="bullet-list green">
+        <li><strong>30 years of world-class credentials.</strong> General Electric Master Black Belt, Xchanging co-founder (&pound;660M valuation), HSBC (&dollar;150M+ savings), Generali (&euro;60M delivered)</li>
+        <li><strong>Extraordinary close rate.</strong> When you are in front of the right person, you almost always win the business</li>
+        <li><strong>Private equity is the perfect vertical.</strong> TDR Capital relationship proves the model works. Each portfolio company win rolls across the entire fund</li>
+        <li><strong>Unique intellectual property.</strong> End-to-end process mapping on a single sheet of paper. Two-hour workshops that eliminate entire swim lanes</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(245,158,11,0.2);">
+      <h4 class="text-amber mb-16">&#x1F6A7; The Gaps</h4>
+      <ul class="bullet-list amber">
+        <li><strong>No outbound system.</strong> 100% dependent on manually reconnecting with former colleagues on LinkedIn</li>
+        <li><strong>Track record is invisible to new prospects.</strong> Case studies exist but are not being distributed to the people who need them</li>
+        <li><strong>Private equity vertical is not being worked systematically.</strong> TDR Capital happened organically. No repeatable playbook to replicate it across hundreds of firms</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 3: AWARENESS PYRAMID -->
+<div class="slide" data-slide="3">
+<div class="slide-inner">
+  <h2 class="text-center mb-8">&#x274C; Why Most Outbound Fails</h2>
+  <p class="subtitle text-center" style="max-width:680px; margin:0 auto 24px;">Only 3% of any market is actively buying. Traditional outreach ignores the other 97%.</p>
+
+  <div style="width:100%; margin:0 auto 20px; background:rgba(255,255,255,0.02); border:1px solid var(--card-border); border-radius:var(--radius); padding:24px;">
+    <p style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--text-secondary); text-align:center; margin-bottom:16px;">MARKET AWARENESS PYRAMID</p>
+    <svg viewBox="0 0 960 520" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+      <polygon points="116,400 20,500 940,500 844,400" fill="rgba(239,68,68,0.07)"/>
+      <polygon points="208,304 116,400 844,400 752,304" fill="rgba(239,68,68,0.05)"/>
+      <polygon points="308,200 208,304 752,304 652,200" fill="rgba(239,68,68,0.03)"/>
+      <polygon points="396,108 308,200 652,200 564,108" fill="rgba(34,197,94,0.10)"/>
+      <polygon points="480,20 396,108 564,108" fill="rgba(34,197,94,0.20)"/>
+      <polygon points="480,20 20,500 940,500" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="1.5" stroke-linejoin="miter"/>
+      <line x1="396" y1="108" x2="564" y2="108" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <line x1="308" y1="200" x2="652" y2="200" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <line x1="208" y1="304" x2="752" y2="304" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <line x1="116" y1="400" x2="844" y2="400" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <line x1="308" y1="200" x2="652" y2="200" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <text x="480" y="72" text-anchor="middle" fill="#22c55e" font-size="18" font-weight="800">3%</text>
+      <text x="480" y="92" text-anchor="middle" fill="#a0a0b8" font-size="11" font-weight="700" letter-spacing="0.5">BUYING NOW</text>
+      <text x="480" y="158" text-anchor="middle" fill="#22c55e" font-size="20" font-weight="800">7%</text>
+      <text x="480" y="180" text-anchor="middle" fill="#a0a0b8" font-size="12" font-weight="600" letter-spacing="0.5">OPEN TO IT</text>
+      <text x="480" y="256" text-anchor="middle" fill="#ef4444" font-size="22" font-weight="800" opacity="0.6">30%</text>
+      <text x="480" y="280" text-anchor="middle" fill="#a0a0b8" font-size="12" font-weight="600" letter-spacing="0.5">NOT THINKING ABOUT IT</text>
+      <text x="480" y="356" text-anchor="middle" fill="#ef4444" font-size="22" font-weight="800" opacity="0.45">30%</text>
+      <text x="480" y="380" text-anchor="middle" fill="#a0a0b8" font-size="12" font-weight="600" letter-spacing="0.5">THINK THEY ARE NOT INTERESTED</text>
+      <text x="480" y="456" text-anchor="middle" fill="#ef4444" font-size="22" font-weight="800" opacity="0.3">30%</text>
+      <text x="480" y="480" text-anchor="middle" fill="#a0a0b8" font-size="12" font-weight="600" letter-spacing="0.5">DEFINITELY NOT INTERESTED</text>
+      <text x="938" y="115" text-anchor="end" fill="#f0f0f5" font-size="13" font-weight="700">Top 10%</text>
+      <text x="938" y="133" text-anchor="end" fill="#a0a0b8" font-size="11">Everyone fights here</text>
+      <line x1="898" y1="122" x2="600" y2="160" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="938" y="356" text-anchor="end" fill="#f0f0f5" font-size="13" font-weight="700">Bottom 90%</text>
+      <text x="938" y="374" text-anchor="end" fill="#a0a0b8" font-size="11">Where AI outbound wins</text>
+      <line x1="898" y1="365" x2="770" y2="350" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+    <div class="card card-sm" style="border-color:rgba(239,68,68,0.25); background:rgba(239,68,68,0.05); padding:14px 18px;">
+      <p style="font-size:11px; font-weight:700; color:#ef4444; margin-bottom:6px; letter-spacing:0.05em;">&#x1F6AB; WHAT OPEX GLOBAL DOES NOW</p>
+      <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Manual LinkedIn reconnections with former colleagues. This only reaches people who already know Paul. You compete for the attention of the <strong style="color:#ef4444;">tiny 3-10%</strong> in your existing network.</p>
+    </div>
+    <div class="card card-sm" style="border-color:rgba(34,197,94,0.25); background:rgba(34,197,94,0.05); padding:14px 18px;">
+      <p style="font-size:11px; font-weight:700; color:#22c55e; margin-bottom:6px; letter-spacing:0.05em;">&#x1F680; WHAT AI OUTBOUND DOES</p>
+      <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Reaches the <strong style="color:#22c55e;">other 90%</strong> with personalised, multi-channel outreach. Puts Paul in front of private equity operating partners who have never heard of OpEx Global but desperately need what he does.</p>
+    </div>
+  </div>
+
+  <div class="glow-card" style="padding:16px 24px; background:linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.03) 100%); border-color:rgba(34,197,94,0.2);">
+    <p style="font-size:15px; text-align:center; margin-bottom:6px;"><strong>There are hundreds of private equity firms across the United Kingdom and Europe. Right now, you are reaching <span class="text-red">almost none of them</span> through outbound.</strong></p>
+    <p class="text-secondary" style="font-size:13px; text-align:center;">AI outbound does not just reach the 3% who are buying. It educates the 30% who are not thinking about it yet. When they need an operational excellence expert, you are already the name they know.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 4: GAP #1 -->
+<div class="slide center-v" data-slide="4">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Diagnostic: Gap #1</p>
+  <h2 class="text-center mb-32">&#x26A0;&#xFE0F; No Outbound System: 100% Network Dependent</h2>
+
+  <div class="gap-section">
+    <h4>The Gap: Where Your Business Stands Today</h4>
+    <p>Paul, OpEx Global generates business almost entirely from your existing network. You manually reconnect with former colleagues on LinkedIn and wait for referrals. There is no systematic way to reach the hundreds of private equity firms across the United Kingdom and Europe that need operational excellence expertise. Your revenue is unpredictable because it depends entirely on who you already know deciding to respond.</p>
+  </div>
+
+  <div class="gap-section">
+    <h4>Root Cause</h4>
+    <p>You do not have a repeatable engine that puts OpEx Global in front of new private equity operating partners every week. No cold email infrastructure, no LinkedIn automation, no podcast invitation outreach. The people who would benefit most from your 30 years of expertise have never heard of you.</p>
+  </div>
+
+  <div class="card card-red mb-24">
+    <h4 class="text-red mb-8">&#x1F4B8; Cost of Inaction</h4>
+    <p style="font-size:17px; color:var(--text-secondary);">Missing 3-5 new private equity conversations per month. At an average engagement value of &pound;75,000-&pound;150,000, that is <strong style="color:var(--text);">&pound;225,000-&pound;750,000 in new annual revenue</strong> every month that passes without a system. And in private equity, each portfolio company win rolls across the entire fund. <strong style="color:var(--red);">The compounding loss is millions.</strong></p>
+  </div>
+
+  <div class="card card-violet">
+    <h4 class="text-accent mb-12">&#x1F914; Questions for Paul</h4>
+    <ul class="question-list">
+      <li>"If your existing network stopped responding tomorrow, how would new private equity firms find you?"</li>
+      <li>"There are hundreds of private equity firms across Europe. How many know OpEx Global exists?"</li>
+      <li>"You said you almost always close when you are in front of the right person. What if you were in front of 15-20 of the right people every month?"</li>
+    </ul>
+  </div>
+
+  <div class="solve-box">
+    <h4>&#x2705; How We Solve This</h4>
+    <p>We install an AI-powered outbound engine: cold email and LinkedIn automation running simultaneously, plus podcast invitation outreach to the top private equity operating partners in the United Kingdom and Europe. Personalised messages referencing your General Electric, HSBC, Xchanging, and Generali case studies, landing in their inbox every week. 15-30 qualified conversations per month instead of whatever your network produces.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 5: GAP #2 -->
+<div class="slide center-v" data-slide="5">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Diagnostic: Gap #2</p>
+  <h2 class="text-center mb-32">&#x26A0;&#xFE0F; World-Class Track Record, Zero Distribution</h2>
+
+  <div class="gap-section">
+    <h4>The Gap: Invisible to the Market</h4>
+    <p>Paul, you have delivered over &euro;200 million at General Electric, co-founded a &pound;660 million company, saved HSBC over &dollar;150 million annually, and contributed to Generali's &euro;1.5 billion operational excellence target. You have case studies and testimonials on your website. But there is no system distributing them to the people who need to see them. No podcast presence, no LinkedIn content engine, no thought leadership being pushed to private equity decision-makers. 30 years of extraordinary proof exists, but it sits there waiting to be found instead of being pushed to the people who need it.</p>
+  </div>
+
+  <div class="gap-section">
+    <h4>Root Cause</h4>
+    <p>No content distribution system. No podcast appearances building authority. No LinkedIn thought leadership generated and published consistently. Your case studies are the most powerful marketing assets in operational excellence consulting, but they are locked on a website that private equity operating partners are not visiting.</p>
+  </div>
+
+  <div class="card card-red mb-24">
+    <h4 class="text-red mb-8">&#x1F4B8; Cost of Inaction</h4>
+    <p style="font-size:17px; color:var(--text-secondary);">Right now, consultants with a fraction of your experience are winning private equity contracts because they are more visible. They are setting the narrative in a space you pioneered. <strong style="color:var(--red);">Every day your track record stays invisible, someone less qualified is closing the deal you should have.</strong></p>
+  </div>
+
+  <div class="card card-violet">
+    <h4 class="text-accent mb-12">&#x1F914; Questions for Paul</h4>
+    <ul class="question-list">
+      <li>"You co-founded a &pound;660 million company and delivered &euro;200 million at General Electric. If I Google 'operational excellence consulting private equity,' does OpEx Global show up?"</li>
+      <li>"When a private equity operating partner is deciding between you and a competitor who has a podcast, weekly LinkedIn content, and published case studies, who gets the call first?"</li>
+    </ul>
+  </div>
+
+  <div class="solve-box">
+    <h4>&#x2705; How We Solve This</h4>
+    <p>We build a content distribution engine. Podcast appearances to build authority. LinkedIn thought leadership generated weekly by AI and published under your name. Your General Electric and HSBC stories become the marketing, pushed directly to private equity operating partners through every channel. We package your 30 years of proof into outbound-ready assets that do the selling for you.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 6: GAP #3 -->
+<div class="slide center-v" data-slide="6">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Diagnostic: Gap #3</p>
+  <h2 class="text-center mb-32">&#x26A0;&#xFE0F; No Repeatable Playbook for Private Equity</h2>
+
+  <div class="gap-section">
+    <h4>The Gap: One Relationship, Not a System</h4>
+    <p>TDR Capital happened organically. You are speaking at their Transformation conference. The partnership with UAI Labs and BPP is promising. But there are hundreds of private equity firms across Europe making the exact same mistake: automating broken processes without understanding them first. You have no repeatable playbook to identify, target, and reach private equity operating partners at scale. Every firm you miss is potentially dozens of portfolio companies you will never reach.</p>
+  </div>
+
+  <div class="gap-section">
+    <h4>Root Cause</h4>
+    <p>No way to systematically map the private equity landscape: every firm, every operating partner, every portfolio company chief operating officer. No outreach sequences tailored to the private equity buying process. TDR Capital proved the model works, but there is no engine to replicate it across every other firm.</p>
+  </div>
+
+  <div class="card card-red mb-24">
+    <h4 class="text-red mb-8">&#x1F4B8; Cost of Inaction</h4>
+    <p style="font-size:17px; color:var(--text-secondary);">Private equity firms are making multi-million pound decisions about AI transformation right now. You said yourself they are doing it wrong. They are automating broken processes. Every boardroom where that conversation happens without Paul in the room is a deal that goes to someone less qualified. <strong style="color:var(--red);">And in private equity, each pound saved equals 10 times the value at the fund multiple. The stakes are enormous.</strong></p>
+  </div>
+
+  <div class="card card-violet">
+    <h4 class="text-accent mb-12">&#x1F914; Questions for Paul</h4>
+    <ul class="question-list">
+      <li>"TDR Capital owns Asda, David Lloyd, Stonegate Pub Company. How did that relationship start, and what system exists to replicate it with the next 50 firms?"</li>
+      <li>"How many private equity firms across Europe have an operational excellence problem and have never heard of OpEx Global?"</li>
+    </ul>
+  </div>
+
+  <div class="solve-box">
+    <h4>&#x2705; How We Solve This</h4>
+    <p>We map the entire private equity landscape: every firm, every operating partner, every portfolio company chief operating officer. Then we build hyper-targeted campaigns around the exact problem you solve. Personalised outreach that references their specific portfolio companies and the process problems you know they have. One portfolio company win means rollout across the entire fund. This is the highest-leverage vertical in consulting, and we build the system to work it at scale.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 7: COST OF INACTION (PAIN ONLY — no solution cost yet) -->
+<div class="slide center-v" data-slide="7">
+<div class="slide-inner">
+  <p class="eyebrow text-center">The Real Cost</p>
+  <h2 class="text-center mb-12">&#x1F4B0; Every Month Without a System Costs You &pound;41,000</h2>
+  <p class="subtitle text-center mb-32">We did the maths on the call. Here is what inaction actually looks like.</p>
+
+  <!-- THE BIG NUMBER -->
+  <div class="card card-red text-center mb-24" style="padding:40px; border:2px solid rgba(239,68,68,0.4);">
+    <p style="font-size:80px; font-weight:700; color:var(--red); line-height:1; margin-bottom:8px;">&pound;41,000</p>
+    <p style="font-size:20px; color:var(--text-secondary);">in revenue lost <strong style="color:var(--text);">every single month</strong> you operate without a pipeline system</p>
+  </div>
+
+  <!-- METRIC CARDS -->
+  <div style="display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap;">
+    <div class="card text-center" style="flex:1; min-width:200px; padding:28px; border-top:3px solid var(--red);">
+      <p style="font-size:44px; font-weight:700; color:var(--red); line-height:1; margin-bottom:8px;">0-1</p>
+      <p style="font-size:15px; font-weight:600; margin-bottom:4px;">conversations per month</p>
+      <p style="font-size:13px; color:var(--text-secondary);">from your network. You should be having <strong style="color:var(--green);">15-20</strong>.</p>
+    </div>
+    <div class="card text-center" style="flex:1; min-width:200px; padding:28px; border-top:3px solid var(--amber);">
+      <p style="font-size:44px; font-weight:700; color:var(--amber); line-height:1; margin-bottom:8px;">&pound;75-150K</p>
+      <p style="font-size:15px; font-weight:600; margin-bottom:4px;">average engagement value</p>
+      <p style="font-size:13px; color:var(--text-secondary);">Your ticket size means <strong style="color:var(--text);">even one extra deal per quarter</strong> is transformational.</p>
+    </div>
+    <div class="card text-center" style="flex:1; min-width:200px; padding:28px; border-top:3px solid var(--red);">
+      <p style="font-size:44px; font-weight:700; color:var(--red); line-height:1; margin-bottom:8px;">5-7</p>
+      <p style="font-size:15px; font-weight:600; margin-bottom:4px;">deals missed per year</p>
+      <p style="font-size:13px; color:var(--text-secondary);">That is <strong style="color:var(--red);">&pound;500K+ per year</strong> sitting on the table. And that is before the private equity multiplier.</p>
+    </div>
+  </div>
+
+  <!-- MARKET STATS — FULL WIDTH -->
+  <div style="display:flex; gap:0; margin-bottom:24px; border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+    <div style="flex:1; padding:20px; background:var(--card); text-align:center; border-right:1px solid var(--card-border);">
+      <p style="font-size:28px; font-weight:700; color:var(--accent); line-height:1; margin-bottom:6px;">10x</p>
+      <p style="font-size:13px; color:var(--text-secondary);">Private equity multiplier on every pound saved</p>
+    </div>
+    <div style="flex:1; padding:20px; background:var(--card); text-align:center; border-right:1px solid var(--card-border);">
+      <p style="font-size:28px; font-weight:700; color:var(--accent); line-height:1; margin-bottom:6px;">&dollar;109B</p>
+      <p style="font-size:13px; color:var(--text-secondary);">Global operational excellence market, growing 8-10% annually</p>
+    </div>
+    <div style="flex:1; padding:20px; background:var(--card); text-align:center;">
+      <p style="font-size:28px; font-weight:700; color:var(--accent); line-height:1; margin-bottom:6px;">&dollar;1.5T</p>
+      <p style="font-size:13px; color:var(--text-secondary);">In dry powder waiting to be deployed by private equity firms</p>
+    </div>
+  </div>
+
+  <p class="playfair-quote text-center" style="font-size:20px;">"The cost of executing with AI has collapsed. But the cost of executing the wrong thing has exploded."<br><span style="font-size:15px; color:var(--accent); font-style:normal;">&mdash; Paul Ruggier</span></p>
+</div>
+</div>
+
+<!-- SLIDE 8: SOLUTION OVERVIEW -->
+<div class="slide center-v" data-slide="8">
+<div class="slide-inner">
+  <p class="eyebrow text-center">The Solution</p>
+  <h2 class="text-center mb-12">&#x1F680; Install an AI-Powered Growth Engine</h2>
+  <p class="subtitle text-center mb-40">Three pillars. Everything you need, nothing you do not.</p>
+  <div class="grid-3">
+    <div class="card text-center" style="border-top:3px solid var(--accent);">
+      <p class="eyebrow text-center mb-12" style="font-size:12px;">Pillar 1</p>
+      <p style="font-size:28px; margin-bottom:12px;">&#x1F3AF;</p>
+      <h3 class="mb-12">Positioning &amp; Podcast-Led Authority</h3>
+      <p class="text-secondary" style="font-size:16px;">Starts with a Value Proposition Workshop to define your offer and messaging. Then package your 30 years of proof into outbound-ready assets. Launch a podcast as a Trojan horse to build relationships with private equity decision-makers.</p>
+    </div>
+    <div class="card text-center" style="border-top:3px solid var(--accent);">
+      <p class="eyebrow text-center mb-12" style="font-size:12px;">Pillar 2</p>
+      <p style="font-size:28px; margin-bottom:12px;">&#x26A1;</p>
+      <h3 class="mb-12">AI-Powered Outbound Engine</h3>
+      <p class="text-secondary" style="font-size:16px;">LinkedIn, email, and podcast invitation outreach to private equity operating partners and portfolio company leaders across the United Kingdom and Europe. Three channels running simultaneously.</p>
+    </div>
+    <div class="card text-center" style="border-top:3px solid var(--accent);">
+      <p class="eyebrow text-center mb-12" style="font-size:12px;">Pillar 3</p>
+      <p style="font-size:28px; margin-bottom:12px;">&#x1F4CA;</p>
+      <h3 class="mb-12">Pipeline Tracking &amp; Sales Enablement</h3>
+      <p class="text-secondary" style="font-size:16px;">Track every private equity firm from first contact to close. Analyse every sales call. Follow up automatically. The system Paul said was missing.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 9: AGENT FLEET -->
+<div class="slide" data-slide="9">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Powered by OpenClaw</p>
+  <h2 class="text-center mb-8">&#x1F916; Your Dedicated AI Agent Fleet</h2>
+  <p class="subtitle text-center mb-32">6 specialised AI agents deployed across your business, working 24/7.</p>
+
+  <div class="grid-3 mb-24" style="gap:16px;">
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x1F50D;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Scout</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Lead Research</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Researches private equity operating partners, enriches contact data, maps portfolio companies and org charts</p>
+    </div>
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x1F575;&#xFE0F;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Sherlock</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Deep Research</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Deep-dives into Dream 200 private equity firms. Maps fund strategy, portfolio companies, transformation initiatives, and operating partner pain points</p>
+    </div>
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x1F4E1;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Maverick</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Campaign Manager</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Manages email and LinkedIn campaigns, optimises send times, split-tests messaging at scale across private equity segments</p>
+    </div>
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x1F4EC;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Dash</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Inbox Monitor</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Watches for replies across all channels 24/7, classifies urgency, responds in under 60 seconds, escalates hot leads</p>
+    </div>
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x270D;&#xFE0F;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Echo</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Content Engine</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Generates LinkedIn posts, thought leadership content, and authority-building articles positioning Paul as the operational excellence expert for private equity</p>
+    </div>
+    <div class="card text-center" style="padding:24px; border-top:3px solid var(--accent);">
+      <p style="font-size:32px; margin-bottom:8px;">&#x1F3AF;</p>
+      <h4 style="font-size:16px; margin-bottom:4px;">Keenan</h4>
+      <p style="font-size:13px; color:var(--accent); margin-bottom:8px;">Sales Coach</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.5;">Analyses every sales call against 4 proven frameworks, provides specific coaching to convert more private equity conversations into engagements</p>
+    </div>
+  </div>
+
+  <div class="glow-card text-center" style="padding:20px;">
+    <p style="font-size:18px; font-weight:600; margin-bottom:4px;">These agents never sleep, never take holidays, never forget to follow up.</p>
+    <p style="font-size:14px; color:var(--text-secondary);">Combined value: <strong>&pound;6,500/month</strong>. Included as part of your growth system.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 10: PILLAR 1 -->
+<div class="slide" data-slide="10">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 1</p>
+  <h2 class="text-center mb-12">&#x1F3AF; Positioning &amp; Podcast-Led Authority</h2>
+  <p class="subtitle mb-32">Before we send a single message, we nail your offer, your messaging, and your ideal client profile. Then your 30 years of proof becomes the marketing engine.</p>
+
+  <div class="card card-green mb-24" style="padding:24px; border:2px solid rgba(34,197,94,0.4);">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+      <div style="width:48px; height:48px; border-radius:12px; background:rgba(34,197,94,0.12); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0;">&#x1F3AF;</div>
+      <div>
+        <p style="font-size:11px; font-weight:700; color:var(--green); letter-spacing:0.1em; margin-bottom:2px;">STEP 0 (BEFORE ANYTHING ELSE)</p>
+        <p style="font-size:20px; font-weight:700;">Value Proposition Workshop</p>
+      </div>
+      <div style="margin-left:auto; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); border-radius:20px; padding:4px 14px; font-size:13px; font-weight:700; color:var(--green); white-space:nowrap;">Worth &pound;500 &mdash; Included Free</div>
+    </div>
+    <p style="font-size:15px; line-height:1.7; margin-bottom:16px;">Paul, you said on the call: <em>&ldquo;I don&rsquo;t have a very clear offering.&rdquo;</em> This is the single biggest thing holding you back &mdash; and it is exactly what this workshop is designed to solve before we reach out to anyone.</p>
+
+    <!-- CATEGORY OF ONE -->
+    <p style="font-size:13px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Step 1: Create Your Category of One</p>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:12px;">Right now you compete in &ldquo;operational excellence consulting&rdquo; alongside McKinsey, Deloitte, and hundreds of LinkedIn consultants. The goal is to <strong style="color:var(--text);">create a category only you can own.</strong></p>
+    <div style="background:rgba(34,197,94,0.06); border-radius:10px; padding:14px; margin-bottom:16px;">
+      <p style="font-size:14px; color:var(--text); line-height:1.7;">You are <strong style="color:var(--green);">the only person in Europe with 500M+ in verified savings across GE, HSBC, Generali, and Xchanging.</strong> First Master Black Belt in Europe. First to apply Six Sigma to non-manufacturing. Co-founded a company to a &pound;660M IPO. <strong style="color:var(--text);">Nobody else can say that.</strong></p>
+    </div>
+
+    <!-- IRRESISTIBLE OFFER FORMULA -->
+    <p style="font-size:13px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Step 2: Build Your Irresistible Offer</p>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:12px;">An offer so good people feel stupid saying no. We use the <strong style="color:var(--text);">Grand Slam Offer</strong> formula to engineer this:</p>
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:16px; padding:16px; background:rgba(34,197,94,0.04); border-radius:12px; border:1px solid rgba(34,197,94,0.15);">
+      <div style="text-align:center; padding:8px 12px;">
+        <p style="font-size:18px; font-weight:700; color:var(--green);">Dream Outcome</p>
+        <p style="font-size:12px; color:var(--text-secondary);">&ldquo;Save millions before<br>you automate anything&rdquo;</p>
+      </div>
+      <p style="font-size:24px; color:var(--text-secondary);">&times;</p>
+      <div style="text-align:center; padding:8px 12px;">
+        <p style="font-size:18px; font-weight:700; color:var(--green);">Perceived Likelihood</p>
+        <p style="font-size:12px; color:var(--text-secondary);">GE, HSBC, Generali proof<br>= certainty, not hope</p>
+      </div>
+      <p style="font-size:24px; color:var(--text-secondary);">&divide;</p>
+      <div style="text-align:center; padding:8px 12px;">
+        <p style="font-size:18px; font-weight:700; color:var(--amber);">Time Delay</p>
+        <p style="font-size:12px; color:var(--text-secondary);">2-hour audit finds<br>broken processes instantly</p>
+      </div>
+      <p style="font-size:24px; color:var(--text-secondary);">&times;</p>
+      <div style="text-align:center; padding:8px 12px;">
+        <p style="font-size:18px; font-weight:700; color:var(--amber);">Effort &amp; Sacrifice</p>
+        <p style="font-size:12px; color:var(--text-secondary);">Paul does the work,<br>they just show up</p>
+      </div>
+    </div>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:16px;">Your track record = near-100% perceived likelihood. Your 2-hour process map = near-zero time delay. Massive dream outcome + minimal buyer effort. <strong style="color:var(--text);">That is what makes an offer irresistible.</strong></p>
+
+    <!-- CONCRETE OFFER LADDER -->
+    <p style="font-size:13px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px;">Step 3: Design Your Money Model (Offer Ladder)</p>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.7; margin-bottom:12px;">Here is the offer ladder direction. We refine this together in the workshop:</p>
+
+    <div style="display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+      <div style="flex:1; min-width:200px; background:rgba(124,58,237,0.06); border-radius:12px; padding:16px; border:1px solid rgba(124,58,237,0.2);">
+        <p style="font-size:11px; font-weight:700; color:var(--accent); letter-spacing:0.08em; margin-bottom:4px;">FREE: LEAD MAGNET</p>
+        <p style="font-size:15px; font-weight:700; margin-bottom:6px;">Podcast Invitation</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:8px;">Invite operating partners to be interviewed. Nobody says no. 30 minutes of rapport, surface pain, demonstrate expertise naturally.</p>
+        <p style="font-size:12px; color:var(--accent); font-weight:600;">Cost: Free | Value: Relationship + intel</p>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--accent); font-weight:700; font-size:18px;">&rarr;</div>
+      <div style="flex:1; min-width:200px; background:rgba(245,158,11,0.06); border-radius:12px; padding:16px; border:1px solid rgba(245,158,11,0.2);">
+        <p style="font-size:11px; font-weight:700; color:var(--amber); letter-spacing:0.08em; margin-bottom:4px;">FREE/LOW COST: FRONT-END</p>
+        <p style="font-size:15px; font-weight:700; margin-bottom:6px;">Process Readiness Audit</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:8px;">2-hour workshop. Map processes on one page. Find what is broken before they automate. <strong style="color:var(--amber);">Guarantee: 3+ broken processes or it is free.</strong></p>
+        <p style="font-size:12px; color:var(--amber); font-weight:600;">Cost: 2 hours | Value: Proof of need + trust</p>
+      </div>
+      <div style="display:flex; align-items:center; color:var(--accent); font-weight:700; font-size:18px;">&rarr;</div>
+      <div style="flex:1; min-width:200px; background:rgba(34,197,94,0.06); border-radius:12px; padding:16px; border:1px solid rgba(34,197,94,0.2);">
+        <p style="font-size:11px; font-weight:700; color:var(--green); letter-spacing:0.08em; margin-bottom:4px;">&pound;75K-200K+: CORE OFFER</p>
+        <p style="font-size:15px; font-weight:700; margin-bottom:6px;">Operational Readiness Programme</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5; margin-bottom:8px;">Fix what the audit uncovered. Build operational excellence capability. <strong style="color:var(--green);">Then roll it across the entire portfolio.</strong></p>
+        <p style="font-size:12px; color:var(--green); font-weight:600;">Cost: &pound;75-200K | Value: Millions in savings</p>
+      </div>
+    </div>
+
+    <div style="background:rgba(124,58,237,0.06); border-radius:12px; padding:16px; border:1px solid rgba(124,58,237,0.15); margin-bottom:16px;">
+      <p style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:6px;">THE PRIVATE EQUITY MULTIPLIER</p>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.7;">Each pound saved = <strong style="color:var(--text);">10x+ at the fund multiple.</strong> One win in a portfolio company = case study to roll across the entire fund. TDR Capital already proved this. <strong style="color:var(--text);">One PE firm is not one client — it is 10, 20, 50 clients.</strong></p>
+    </div>
+
+    <div style="background:rgba(34,197,94,0.06); border-radius:10px; padding:14px; border:1px solid rgba(34,197,94,0.15);">
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--green);">You do not need any of this figured out before we start.</strong> We build it together in the workshop, test through real outreach, and refine based on what converts.</p>
+    </div>
+  </div>
+
+  <details open>
+    <summary>&#x1F399;&#xFE0F; Step 1: Podcast — The Trojan Horse Into Private Equity</summary>
+    <div class="detail-body">
+      <p style="font-size:15px; line-height:1.7; margin-bottom:12px;">Paul interviews PE operating partners and portfolio company leaders. The podcast is not the product — it is the door opener that leads to the audit.</p>
+      <ul>
+        <li><strong>Invite operating partners as guests.</strong> Nobody says no to being interviewed — bypasses gatekeepers entirely</li>
+        <li><strong>Paul demonstrates expertise naturally</strong> by asking the right questions about transformation challenges, sharing HSBC and GE stories</li>
+        <li><strong>After recording, offer the Process Readiness Audit:</strong> "Based on what you shared about automating [specific process], would it be useful if I ran a quick 2-hour audit?"</li>
+        <li><strong>Content becomes LinkedIn authority.</strong> Clips and insights published weekly to thousands of PE professionals</li>
+      </ul>
+      <div class="card card-sm mt-12" style="background:rgba(34,197,94,0.04); padding:14px; border-color:rgba(34,197,94,0.2);">
+        <p style="font-size:13px; color:var(--green); font-weight:600; margin-bottom:4px;">WHY THIS WORKS FOR PAUL</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">Podcast invitations get 5-10x higher response than cold emails. Paul said: "Once I'm in front of them, I usually always make the sale." 30 minutes of rapport + demonstrated expertise. The audit is the natural next step.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F50D; Step 2: Process Readiness Audit — The Penny Drop Moment</summary>
+    <div class="detail-body">
+      <div class="card card-sm mb-12" style="border-color:rgba(245,158,11,0.3); padding:16px; background:rgba(245,158,11,0.04);">
+        <p style="font-size:13px; font-weight:600; color:var(--amber); letter-spacing:0.08em; margin-bottom:8px;">PAUL'S CORE INSIGHT</p>
+        <p style="font-size:15px; line-height:1.6; color:var(--text);">&ldquo;Organisations are automating broken processes. They have not first understood and optimised before automation.&rdquo;</p>
+        <p style="font-size:13px; color:var(--text-secondary); margin-top:8px;">The audit creates this penny-drop moment. Every prospect Paul has closed had this realisation.</p>
+      </div>
+      <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px;">How the Audit Works:</p>
+      <ul>
+        <li><strong>2-hour workshop</strong> — Paul maps their end-to-end processes on a single sheet of paper</li>
+        <li><strong>Identifies broken processes about to be automated.</strong> At HSBC: duplicated KYC checks 6 weeks apart. At Lloyd's: simplified what consultants spent years mapping</li>
+        <li><strong>Delivers a Process Readiness Scorecard</strong> — what is ready, what is broken, what to fix first</li>
+        <li><strong>Quantifies waste.</strong> HSBC's RPA promised 5,000 headcount savings, delivered 200</li>
+      </ul>
+      <div class="card card-sm mt-12" style="border-color:rgba(34,197,94,0.3); padding:14px; background:rgba(34,197,94,0.04);">
+        <p style="font-size:14px; font-weight:700; color:var(--green); margin-bottom:6px;">THE GUARANTEE</p>
+        <p style="font-size:14px; line-height:1.6; color:var(--text);">&ldquo;If we do not find at least 3 broken processes, the audit is free.&rdquo;</p>
+        <p style="font-size:13px; color:var(--text-secondary); margin-top:6px;">In 30 years, Paul has never failed to find them. Risk-free for Paul, irresistible for the buyer.</p>
+      </div>
+      <div class="card card-sm mt-12" style="background:rgba(124,58,237,0.04); padding:14px;">
+        <p style="font-size:13px; font-weight:600; color:var(--accent); margin-bottom:4px;">WHY THIS CONVERTS</p>
+        <p style="font-size:13px; color:var(--text-secondary); line-height:1.5;">When a COO sees their entire operation on one page and realises half their automation budget is wasted, the conversation shifts from "do we need this?" to "when can you start?"</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F3AF; Ideal Client Profile: Locked In For 90 Days</summary>
+    <div class="detail-body">
+      <div class="card card-sm mb-12" style="border-color:rgba(124,58,237,0.3); padding:16px;">
+        <p style="font-size:15px; font-weight:700; color:var(--accent); margin-bottom:8px;">THE BUYER</p>
+        <ul style="font-size:14px; line-height:1.8;">
+          <li><strong>Who:</strong> Operating Partners, Portfolio Operations Directors, Chief Operating Officers at private equity portfolio companies</li>
+          <li><strong>Geography:</strong> United Kingdom first, then Europe (France, Germany, Netherlands, Nordics, Switzerland)</li>
+          <li><strong>Tier 1 Titles:</strong> Operating Partner, Head of Portfolio Operations, Value Creation Partner, Chief Operating Officer</li>
+          <li><strong>Tier 2 Titles:</strong> Director of Operations, VP Operations, Head of Transformation, Director of Operational Excellence</li>
+          <li><strong>Firm Size:</strong> 11-500 employees (private equity firm), 201-5,000 (portfolio companies)</li>
+          <li><strong>Trigger:</strong> Portfolio company underperforming, AI transformation initiative, new acquisition integration</li>
+        </ul>
+      </div>
+      <p style="font-size:14px; color:var(--text-secondary); line-height:1.6;"><strong style="color:var(--text);">Why PE:</strong> Each pound saved = 10x at fund multiple. One win = rollout across the entire portfolio. No higher-leverage client in consulting.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F4CB; Proof Asset Development: Case Studies as Closing Weapons</summary>
+    <div class="detail-body">
+      <ul>
+        <li>GE case study: &euro;200M savings across 27 businesses</li>
+        <li>HSBC case study: &dollar;150M annual savings, 700 reports, 50 countries</li>
+        <li>Xchanging case study: &pound;660M valuation, 8,000 employees</li>
+        <li>PE-specific ROI calculator: fund size &times; process waste &times; fund multiple</li>
+        <li>HSBC RPA debacle (promised 5,000 FTE savings, delivered 200) — proof that process before technology matters</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F451; Authority Positioning: Become THE Name in Private Equity Operational Excellence</summary>
+    <div class="detail-body">
+      <ul>
+        <li>LinkedIn presence rebuilt. Our AI content engine generates weekly posts, thought leadership, and commentary on AI transformation in private equity</li>
+        <li>Core narrative: "The cost of executing with AI has collapsed. But the cost of executing the wrong thing has exploded." This is Paul's unique position</li>
+        <li>TDR Capital conference speaking engagement becomes content: video clips, article, LinkedIn series</li>
+        <li>Position OpEx Global as the bridge between legacy process expertise and modern AI transformation</li>
+      </ul>
+    </div>
+  </details>
+</div>
+</div>
+
+<!-- SLIDE 11: PILLAR 2 — OUTBOUND ENGINE -->
+<div class="slide" data-slide="11">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 2</p>
+  <h2 class="text-center mb-12">&#x26A1; AI-Powered Outbound Engine</h2>
+  <p class="subtitle mb-24">Three channels running simultaneously. Each one generates private equity relationships on its own. Together they compound.</p>
+
+  <div class="grid-3 mb-24" style="gap:12px;">
+    <div class="card card-sm text-center" style="padding:16px; border-top:3px solid var(--accent);">
+      <p style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:4px;">&#x1F4E7; EMAIL</p>
+      <p style="font-size:24px; font-weight:700;">~2-3</p>
+      <p style="font-size:12px; color:var(--text-secondary);">conversations/month</p>
+      <p style="font-size:12px; color:var(--green); font-weight:600;">&pound;150K-300K/year</p>
+    </div>
+    <div class="card card-sm text-center" style="padding:16px; border-top:3px solid var(--accent);">
+      <p style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:4px;">&#x1F91D; LINKEDIN</p>
+      <p style="font-size:24px; font-weight:700;">~2-3</p>
+      <p style="font-size:12px; color:var(--text-secondary);">conversations/month</p>
+      <p style="font-size:12px; color:var(--green); font-weight:600;">&pound;150K-300K/year</p>
+    </div>
+    <div class="card card-sm text-center" style="padding:16px; border-top:3px solid var(--green);">
+      <p style="font-size:12px; font-weight:700; color:var(--green); margin-bottom:4px;">&#x1F3AF; DREAM 200</p>
+      <p style="font-size:24px; font-weight:700;">1-2</p>
+      <p style="font-size:12px; color:var(--text-secondary);">conversations/month</p>
+      <p style="font-size:12px; color:var(--green); font-weight:600;">&pound;75K-150K/year</p>
+    </div>
+  </div>
+
+  <details>
+    <summary>&#x1F4E7; Channel 1: Email (Podcast Invitations)</summary>
+    <div class="detail-body">
+      <ul>
+        <li><strong>Email carries the volume.</strong> Podcast invitation emails to thousands of private equity professionals and portfolio company operations leaders</li>
+        <li>5-10 warmed inboxes, split-tested sequences inviting prospects to be guests on Paul's podcast</li>
+        <li><strong>Nobody says no to being interviewed.</strong> Podcast invites get 5-10x higher response rates than cold pitches</li>
+        <li>AI reply classification: interested guests escalated instantly, unqualified responses filtered</li>
+      </ul>
+
+      <div class="card card-sm mt-12" style="border:1px solid rgba(124,58,237,0.15); padding:14px;">
+        <p style="font-size:12px; font-weight:600; color:var(--amber); margin-bottom:6px;">&#x1F4DD; SAMPLE PODCAST INVITE EMAIL</p>
+        <p style="font-size:13px; color:var(--amber); margin-bottom:4px;"><strong>Subject:</strong> Invitation - operational excellence in private equity</p>
+        <p style="font-size:13px; line-height:1.6; color:var(--text);">&ldquo;Hi [Name], I'm recording a series on how private equity firms are approaching operational transformation across their portfolios. Given [fund name]'s work with [portfolio company], I think your perspective would be fascinating for our audience. The conversation is 30-40 minutes, and we handle all the production. Would you be open to a quick chat to see if it's a fit?&rdquo;</p>
+      </div>
+
+      <div class="card card-sm mt-12" style="background:rgba(124,58,237,0.04); padding:14px;">
+        <p style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:8px;">&#x1F4CA; PIPELINE MATH (CONSERVATIVE)</p>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; text-align:center; flex-wrap:wrap;">
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>200/day</strong><br><span style="color:var(--text-secondary);">Emails sent</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>~90/month</strong><br><span style="color:var(--text-secondary);">1.5% reply</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>~9/month</strong><br><span style="color:var(--text-secondary);">Shows</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.12); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong style="color:var(--green);">~2-3/month</strong><br><span style="color:var(--text-secondary);">Qualified meetings</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:12px; font-weight:600; color:var(--text-secondary); margin:14px 0 6px; text-transform:uppercase; letter-spacing:0.08em;">&#x2705; PROOF</p>
+      <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+        <img src="assets/instantly_campaigns.png" alt="Instantly campaigns" style="width:100%; display:block;">
+      </div>
+      <p class="text-secondary" style="font-size:12px; margin-top:6px;">Live data: <strong style="color:var(--green);">15,000+ emails</strong>, <strong style="color:var(--green);">1,200+ replies</strong>, 465 opportunities. Same systems we deploy for you.</p>
+
+      <p style="font-size:12px; font-weight:600; color:var(--text-secondary); margin:18px 0 6px; text-transform:uppercase; letter-spacing:0.08em;">&#x1F30D; YOUR TOTAL ADDRESSABLE MARKET — 9,100 DECISION MAKERS REACHABLE VIA EMAIL</p>
+      <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+        <img src="assets/apollo-tam.png" alt="Apollo - 9,100 private equity and investment management decision makers" style="width:100%; display:block;">
+      </div>
+      <p class="text-secondary" style="font-size:12px; margin-top:6px;">Live Apollo data: <strong style="color:var(--green);">9,100 verified decision makers</strong> across venture capital, private equity, and investment management firms in the United Kingdom and United States. All with accessible email addresses.</p>
+
+      <div class="card card-sm mt-12" style="background:rgba(34,197,94,0.06); padding:14px; border:1px solid rgba(34,197,94,0.15);">
+        <p style="font-size:12px; font-weight:700; color:var(--green); margin-bottom:8px;">&#x1F4B0; THIS IS THE MONEY SITTING ON THE TABLE</p>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; text-align:center; flex-wrap:wrap;">
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>9,100</strong><br><span style="color:var(--text-secondary);">People in your market</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~137</strong><br><span style="color:var(--text-secondary);">1.5% positive reply</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~68</strong><br><span style="color:var(--text-secondary);">50% show up</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~17</strong><br><span style="color:var(--text-secondary);">25% close</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.15); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong style="color:var(--green); font-size:14px;">&pound;1.27M</strong><br><span style="color:var(--text-secondary);">at &pound;75K avg</span>
+          </div>
+        </div>
+        <p style="font-size:12px; color:var(--text-secondary); margin-top:10px; text-align:center;">That is <strong style="color:var(--green);">&pound;1.27 million</strong> in potential revenue sitting in this list. Right now, <strong style="color:var(--red);">zero of them</strong> are hearing from you. We just need a system to reach them predictably.</p>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F91D; Channel 2: LinkedIn (Podcast Invitations)</summary>
+    <div class="detail-body">
+      <ul>
+        <li><strong>LinkedIn is the trust layer.</strong> Podcast-focused outreach to hand-picked private equity operating partners who control transformation budgets</li>
+        <li>Personalised connection requests inviting prospects to be guests on Paul's podcast</li>
+        <li>Value-first messaging: share relevant case studies and thought leadership before asking for anything</li>
+        <li>Nurture through Paul's content on &ldquo;process before AI&rdquo;</li>
+      </ul>
+
+      <div class="card card-sm mt-12" style="background:rgba(124,58,237,0.04); padding:14px;">
+        <p style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:8px;">&#x1F4CA; PIPELINE MATH (CONSERVATIVE)</p>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; text-align:center; flex-wrap:wrap;">
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>100/week</strong><br><span style="color:var(--text-secondary);">Connects sent</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>25/week</strong><br><span style="color:var(--text-secondary);">25% accept</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>3-4/week</strong><br><span style="color:var(--text-secondary);">Conversations</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.12); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong style="color:var(--green);">~2-3/month</strong><br><span style="color:var(--text-secondary);">Qualified meetings</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:12px; font-weight:600; color:var(--text-secondary); margin:14px 0 6px; text-transform:uppercase; letter-spacing:0.08em;">&#x2705; PROOF</p>
+      <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+        <img src="assets/linkedin_outreach_dashboard.png" alt="LinkedIn outreach dashboard" style="width:100%; display:block;">
+      </div>
+      <p class="text-secondary" style="font-size:12px; margin-top:6px;">Live data: <strong style="color:var(--green);">45.4% accept rate</strong>, <strong style="color:var(--green);">18.3% response rate</strong>. We are modelling 25%, well below actual performance.</p>
+
+      <p style="font-size:12px; font-weight:600; color:var(--text-secondary); margin:18px 0 6px; text-transform:uppercase; letter-spacing:0.08em;">&#x1F30D; YOUR TOTAL ADDRESSABLE MARKET — 3,500+ ON LINKEDIN</p>
+      <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+        <img src="assets/sales-nav-tam.png" alt="Sales Navigator - 3,500+ private equity operating partners" style="width:100%; display:block;">
+      </div>
+      <p class="text-secondary" style="font-size:12px; margin-top:6px;">Live Sales Navigator data: <strong style="color:var(--green);">3,500+ operating partners</strong> at private equity and investment management firms across the United Kingdom and United States.</p>
+
+      <div class="card card-sm mt-12" style="background:rgba(34,197,94,0.06); padding:14px; border:1px solid rgba(34,197,94,0.15);">
+        <p style="font-size:12px; font-weight:700; color:var(--green); margin-bottom:8px;">&#x1F4B0; REVENUE PROJECTION — LINKEDIN CHANNEL ALONE</p>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; text-align:center; flex-wrap:wrap;">
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>3,500</strong><br><span style="color:var(--text-secondary);">Total addressable market</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~875</strong><br><span style="color:var(--text-secondary);">25% accept</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~26</strong><br><span style="color:var(--text-secondary);">3% to meeting</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong>~6</strong><br><span style="color:var(--text-secondary);">Deals (25% close)</span>
+          </div>
+          <span style="color:var(--green);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.15); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:55px;">
+            <strong style="color:var(--green);">&pound;450K+</strong><br><span style="color:var(--text-secondary);">at &pound;75K avg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F3AF; Channel 3: Dream 200 (Direct Offer)</summary>
+    <div class="detail-body">
+      <ul>
+        <li>Hand-select the <strong>top 200 private equity firms</strong> in the United Kingdom and Europe — the highest-value targets with the most portfolio companies</li>
+        <li>Build a custom research dossier on each firm: fund size, portfolio companies, known operational challenges</li>
+        <li>Reach out with the <strong>Process Readiness Audit</strong> directly — a high-value offer they cannot ignore</li>
+        <li>Multi-channel follow-up: LinkedIn, email, personalised case studies referencing their specific portfolio</li>
+      </ul>
+
+      <div class="card card-sm mt-12" style="border:1px solid rgba(34,197,94,0.2); padding:14px; background:rgba(34,197,94,0.04);">
+        <p style="font-size:12px; font-weight:600; color:var(--green); margin-bottom:6px;">&#x1F3AF; THE DIRECT OFFER</p>
+        <p style="font-size:13px; line-height:1.6; color:var(--text);">&ldquo;We have found that 80% of companies automating processes right now are automating broken ones. We would like to map yours on a single sheet of paper and show you what we find. If we do not identify at least 3 broken processes, the audit is free.&rdquo;</p>
+      </div>
+
+      <div class="card card-sm mt-12" style="background:rgba(124,58,237,0.04); padding:14px;">
+        <p style="font-size:12px; font-weight:700; color:var(--accent); margin-bottom:8px;">&#x1F4CA; THE PLAY</p>
+        <div style="display:flex; align-items:center; gap:6px; font-size:12px; text-align:center; flex-wrap:wrap;">
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>200</strong><br><span style="color:var(--text-secondary);">Firms researched</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>Audit offer</strong><br><span style="color:var(--text-secondary);">Irresistible value</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong>Map + reveal</strong><br><span style="color:var(--text-secondary);">Prove expertise</span>
+          </div>
+          <span style="color:var(--accent);">&rarr;</span>
+          <div style="background:rgba(34,197,94,0.12); border-radius:8px; padding:8px 10px; flex:1 1 0; min-width:65px;">
+            <strong style="color:var(--green);">1-2/month</strong><br><span style="color:var(--text-secondary);">Transformation deals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+</div>
+</div>
+
+<!-- SLIDE 12: LEAD ENRICHMENT ENGINE -->
+<div class="slide" data-slide="12">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 2: Under the Hood</p>
+  <h2 class="text-center mb-8">&#x1F50D; Lead Enrichment Engine</h2>
+  <p class="subtitle text-center mb-16">AI finds, enriches, and scores every prospect before a single message goes out.</p>
+
+  <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; justify-content:center;"><span style="font-size:12px; color:var(--text-secondary); font-weight:600; margin-right:4px;">Agents:</span>
+    <span style="font-size:12px; padding:4px 12px; background:rgba(124,58,237,0.12); border-radius:20px; color:var(--accent); font-weight:600;">&#x1F50D; Scout</span>
+    <span style="font-size:12px; padding:4px 12px; background:rgba(124,58,237,0.12); border-radius:20px; color:var(--accent); font-weight:600;">&#x1F575;&#xFE0F; Sherlock</span>
+  </div>
+
+  <div class="card card-violet" style="padding:20px; margin-bottom:16px;">
+    <p style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">9-Stage Enrichment Pipeline</p>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; font-size:12px; text-align:center;">
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">1. Source</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Sales Navigator, Apollo, Manual</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">2. Deduplicate</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Cross-list, cross-campaign</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">3. Waterfall</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Apollo, Clay, Domain, LinkedIn</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">4. Verify</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">MillionVerifier, bounce guard</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">5. Enrich</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Fund data, portfolio mapping</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">6. Score</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Ideal client fit + intent + quality</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">7. Grade</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">A+ / A / B / C / D tiers</span>
+      </div>
+      <div style="background:rgba(124,58,237,0.1); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px;">8. Route</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Instantly, HeyReach, ClickUp</span>
+      </div>
+      <div style="background:rgba(34,197,94,0.12); border-radius:8px; padding:10px 8px;">
+        <strong style="display:block; margin-bottom:2px; color:var(--green);">9. Launch</strong>
+        <span style="color:var(--text-secondary); font-size:11px;">Prioritised multi-channel outreach</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/le-overview.png" alt="Lead Enrichment Engine overview" style="width:100%; display:block;">
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/le-leads.png" alt="Lead Enrichment Engine - scored and graded leads" style="width:100%; display:block;">
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 13: SPEED-TO-LEAD -->
+<div class="slide" data-slide="13">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 2: Under the Hood</p>
+  <h2 class="text-center mb-12">&#x26A1; Speed-to-Lead &amp; AI Inbound Replier</h2>
+  <p class="subtitle text-center mb-16">When a private equity operating partner replies, AI responds in under 60 seconds.</p>
+
+  <div class="grid-3 mb-24" style="gap:12px;">
+    <div class="card card-sm text-center" style="padding:16px;">
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:4px;">Before</p>
+      <p style="font-size:28px; font-weight:700; color:var(--red);">1-5 hours</p>
+      <p style="font-size:13px; color:var(--text-secondary);">average response time</p>
+    </div>
+    <div class="card card-sm text-center" style="padding:16px;">
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:4px;">After</p>
+      <p style="font-size:28px; font-weight:700; color:var(--green);">60 seconds</p>
+      <p style="font-size:13px; color:var(--text-secondary);">AI-powered response</p>
+    </div>
+    <div class="card card-sm text-center" style="padding:16px;">
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:4px;">Result</p>
+      <p style="font-size:28px; font-weight:700; color:var(--accent);">+391%</p>
+      <p style="font-size:13px; color:var(--text-secondary);">increase in conversions (Hormozi)</p>
+    </div>
+  </div>
+
+  <div class="mb-24">
+    <p style="font-size:14px; font-weight:600; color:var(--accent); margin-bottom:12px; text-transform:uppercase; letter-spacing:0.08em;">&#x1F680; 196-NODE AI WORKFLOW</p>
+    <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+      <img src="assets/odf-n8n-196-nodes.png" alt="196-node AI lead response workflow" style="width:100%; display:block;">
+    </div>
+    <p class="text-secondary" style="font-size:13px; margin-top:8px; text-align:center;">This is the actual automation. 196 nodes handling: deduplication, enrichment, AI qualification, categorisation, routing, personalised response, quality gates, booking, and alerts.</p>
+  </div>
+
+  <div class="grid-2 mb-24" style="gap:16px;">
+    <div class="card card-sm" style="border-top:3px solid var(--green);">
+      <h4 style="font-size:16px; margin-bottom:12px;">&#x26A1; Speed-to-Lead</h4>
+      <ul style="font-size:14px; line-height:1.8;">
+        <li><strong>60 seconds</strong> vs industry average of 6+ hours</li>
+        <li>10 times more likely to book a meeting</li>
+        <li>AI reads the reply, classifies intent, drafts a personalised response</li>
+        <li>Hot leads trigger instant alerts</li>
+      </ul>
+    </div>
+    <div class="card card-sm" style="border-top:3px solid var(--accent);">
+      <h4 style="font-size:16px; margin-bottom:12px;">&#x1F916; AI Inbound Replier</h4>
+      <ul style="font-size:14px; line-height:1.8;">
+        <li>Every reply auto-classified: <span class="text-green">Interested</span> / <span class="text-amber">Needs Info</span> / <span class="text-red">Not Now</span></li>
+        <li>AI drafts contextual replies. You approve with one tap</li>
+        <li>Handles out-of-office, objections, and questions autonomously</li>
+        <li>Nothing falls through the cracks</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 14: PILLAR 3 -->
+<div class="slide" data-slide="14">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 3</p>
+  <h2 class="text-center mb-12">&#x1F504; Pipeline Tracking &amp; Sales Enablement</h2>
+  <p class="subtitle text-center mb-24">Track every private equity firm, analyse every sales call, follow up automatically.</p>
+
+  <div class="grid-2 mb-24" style="gap:16px;">
+    <div class="card card-red" style="padding:20px;">
+      <p style="font-size:13px; font-weight:700; color:var(--red); margin-bottom:10px;">&#x274C; RIGHT NOW</p>
+      <ul style="font-size:14px; line-height:1.7; padding-left:16px;">
+        <li>Private equity firm shows interest, you follow up manually (if you remember)</li>
+        <li>No pipeline system. Conversations tracked in your head</li>
+        <li>No way to track which firms are at which stage</li>
+        <li>Warm leads go cold after 2 weeks</li>
+        <li>No visibility into what is working and what is not</li>
+      </ul>
+    </div>
+    <div class="card card-green" style="padding:20px;">
+      <p style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:10px;">&#x2705; WITH THE SYSTEM</p>
+      <ul style="font-size:14px; line-height:1.7; padding-left:16px;">
+        <li>Every private equity firm tracked from first contact to signed engagement</li>
+        <li>Live pipeline dashboard: stages, values, next actions</li>
+        <li>AI analyses your sales calls and gives coaching</li>
+        <li>Multi-channel follow-up fires automatically</li>
+        <li>Weekly reviews with clear data on what to optimise</li>
+      </ul>
+    </div>
+  </div>
+
+  <details>
+    <summary>&#x1F4CA; Pipeline Dashboard</summary>
+    <div class="detail-body">
+      <p style="font-size:15px; line-height:1.7; margin-bottom:12px;">A live, visual dashboard that tracks every private equity firm and portfolio company from first contact through to signed engagement.</p>
+      <ul style="font-size:14px; line-height:1.8;">
+        <li><strong>Kanban board:</strong> Drag firms through stages (researched, contacted, meeting booked, proposal sent, engaged)</li>
+        <li><strong>Health score:</strong> AI flags conversations going cold so you re-engage before they slip</li>
+        <li><strong>Daily actions:</strong> Each morning, the system tells you exactly which firms to follow up with and why</li>
+        <li><strong>Revenue forecast:</strong> Weighted pipeline value so you can see the target building in real time</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F3AF; Sales Call Analyser</summary>
+    <div class="detail-body">
+      <p style="font-size:15px; line-height:1.7; margin-bottom:12px;">AI listens to every call with a private equity operating partner, scores it, and gives Paul specific coaching on what to improve.</p>
+      <ul style="font-size:14px; line-height:1.8;">
+        <li><strong>Call scoring:</strong> Rates each call across 4 frameworks (pain discovery, objection handling, next steps)</li>
+        <li><strong>Key moments:</strong> Flags the exact moments where the conversation could have been stronger</li>
+        <li><strong>Coaching notes:</strong> Specific, actionable feedback after every call</li>
+        <li><strong>Pattern tracking:</strong> Shows which objections keep coming up so you can refine the pitch</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>&#x1F504; Smart Follow-Up Sequences</summary>
+    <div class="detail-body">
+      <p style="font-size:15px; line-height:1.7; margin-bottom:12px;">Automated multi-channel follow-up that keeps private equity firms warm. When an operating partner says "not now," the system nurtures them until they are ready.</p>
+      <ul style="font-size:14px; line-height:1.8;">
+        <li><strong>Multi-channel:</strong> Email and LinkedIn sequences working together</li>
+        <li><strong>Trigger-based:</strong> If a contact opens your email 3 times but does not reply, the system escalates to a different channel</li>
+        <li><strong>Value drip:</strong> Sends relevant case studies, industry insights, and proof assets spaced over weeks</li>
+        <li><strong>Auto-handoff:</strong> When a cold lead re-engages, the system alerts you immediately</li>
+      </ul>
+    </div>
+  </details>
+</div>
+</div>
+
+<!-- SLIDE 15: PIPELINE DASHBOARD + SALES ANALYZER -->
+<div class="slide" data-slide="15">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Pillar 3: Under the Hood</p>
+  <h2 class="text-center mb-12">&#x1F4CA; Pipeline Dashboard &amp; Sales Call Analyser</h2>
+  <p class="subtitle text-center mb-24">Every firm, every conversation, every pound, tracked in one place.</p>
+
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/pc-overview.png" alt="Pipeline Command - overview dashboard" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F4B0; Pipeline overview: health score, total value, weighted forecast, top opportunities</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/pc-kanban.png" alt="Pipeline Command - kanban board" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F5C2;&#xFE0F; Kanban board: every private equity firm moves through stages visually</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/rc-live-session.png" alt="Recording Companion - live coaching" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F399;&#xFE0F; Sales call analyser: real-time transcript with AI coach suggesting what to ask next</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:24px;">
+    <img src="assets/rc-debrief-score.png" alt="Recording Companion - post-call debrief" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F4CB; Post-call debrief: scores, gap analysis, and specific coaching for next time</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 16: DEDICATED CLIENT PORTAL BONUS -->
+<div class="slide" data-slide="16">
+<div class="slide-inner">
+  <p class="eyebrow text-center" style="color:var(--green);">&#x1F381; Free Bonus</p>
+  <h2 class="text-center mb-12">&#x1F310; Your Dedicated Client Portal</h2>
+  <p class="subtitle text-center mb-16">We normally charge <strong style="color:var(--text);">&pound;500-700/month</strong> for this. You get it free.</p>
+  <p class="text-secondary text-center mb-24" style="font-size:15px;"><strong style="color:var(--accent);">opexglobal.dopaminedigital.io</strong> — a personalised dashboard built exclusively for you</p>
+
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/wiki-homepage.png" alt="Dopamine Digital client portal homepage" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F3E0; Your portal homepage: every document, standard operating procedure, report, and tool in one place</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:24px;">
+    <img src="assets/wiki-client-report.png" alt="Lead intelligence report example" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F4CA; Live intelligence reports: lead pipeline, enrichment results, campaign performance, all updated in real-time</p>
+  </div>
+
+  <div class="grid-2 mb-24" style="gap:12px;">
+    <div class="card card-sm" style="padding:16px;">
+      <p style="font-size:13px; font-weight:700; color:var(--accent); margin-bottom:8px;">What Lives in Your Portal</p>
+      <ul style="font-size:13px; line-height:1.8; color:var(--text-secondary); padding-left:16px;">
+        <li>Custom standard operating procedures we build for your outreach</li>
+        <li>Dashboard reporting and key performance indicator tracking</li>
+        <li>Call scripts and email templates</li>
+        <li>AI agent documentation</li>
+        <li>Lead intelligence reports</li>
+      </ul>
+    </div>
+    <div class="card card-sm" style="padding:16px;">
+      <p style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:8px;">You Own Everything</p>
+      <ul style="font-size:13px; line-height:1.8; color:var(--text-secondary); padding-left:16px;">
+        <li>Every standard operating procedure we write is yours to keep</li>
+        <li>Every AI agent we deploy stays with you</li>
+        <li>Every script, template, and automation</li>
+        <li>If we part ways, you walk away with all of it</li>
+        <li>No lock-in, no proprietary black boxes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="glow-card" style="padding:20px;">
+    <p style="font-size:18px; text-align:center; margin-bottom:8px;"><strong>You will never wonder &ldquo;is this working?&rdquo;</strong></p>
+    <p style="font-size:14px; color:var(--text-secondary); text-align:center;">Open one portal. See every email sent, every LinkedIn connect, every meeting booked, every firm in the pipeline. Updated daily. <span class="text-green" style="font-weight:600;">&pound;500-700/month value. Included free.</span></p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 17: MISSION CONTROL BONUS -->
+<div class="slide" data-slide="17">
+<div class="slide-inner">
+  <p class="eyebrow text-center" style="color:var(--green);">&#x1F381; Free Bonus</p>
+  <h2 class="text-center mb-12">&#x1F3E0; Mission Control Dashboard</h2>
+  <p class="subtitle text-center mb-24">Real-time data visualisation. We normally charge <strong style="color:var(--text);">&pound;600/month</strong> for this. You get it free.</p>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/mc-home.png" alt="Mission Control - home dashboard" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F4B0; Revenue tracking: pipeline, emails sent, LinkedIn connects, podcast bookings</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/mc-clients.png" alt="Mission Control - client health" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x2764;&#xFE0F; Engagement health: guarantee progress, pipeline value, podcast status, health scores</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:24px;">
+    <img src="assets/mc-agents.png" alt="Mission Control - AI agents" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">&#x1F916; AI agent fleet: every automation running for your account, visible in one view</p>
+  </div>
+  <div class="glow-card" style="padding:20px;">
+    <p style="font-size:18px; text-align:center; margin-bottom:8px;"><strong>Every number. Every campaign. One screen.</strong></p>
+    <p style="font-size:14px; color:var(--text-secondary); text-align:center;">Open one dashboard. See every email sent, every LinkedIn connect, every meeting booked, every firm in the pipeline. Updated daily. <span class="text-green" style="font-weight:600;">&pound;600/month value. Included free.</span></p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 18: COMBINED PIPELINE PROJECTION -->
+<div class="slide" data-slide="18">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Combined Pipeline Projection</p>
+  <h2 class="text-center mb-24">&#x1F4C8; The Math to &pound;500K+ Pipeline</h2>
+
+  <div class="grid-3 mb-24">
+    <div class="card text-center" style="border-color:rgba(124,58,237,0.2);">
+      <p class="eyebrow mb-8">&#x1F4E7; Cold Email</p>
+      <p style="font-size:28px; font-weight:700; margin-bottom:4px;">~2-3/month</p>
+      <p class="text-green" style="font-size:20px; font-weight:600;">&pound;150K-300K/year</p>
+      <p class="text-secondary" style="font-size:13px; margin-top:4px;">200 emails/day &rarr; 90 replies &rarr; 9 shows</p>
+    </div>
+    <div class="card text-center" style="border-color:rgba(124,58,237,0.2);">
+      <p class="eyebrow mb-8">&#x1F91D; LinkedIn</p>
+      <p style="font-size:28px; font-weight:700; margin-bottom:4px;">~2-3/month</p>
+      <p class="text-green" style="font-size:20px; font-weight:600;">&pound;150K-300K/year</p>
+      <p class="text-secondary" style="font-size:13px; margin-top:4px;">100 connects/week &rarr; 25 accept &rarr; 3-4 calls</p>
+    </div>
+    <div class="card text-center" style="border-color:rgba(34,197,94,0.2);">
+      <p class="eyebrow mb-8">&#x1F399;&#xFE0F; Podcast + Referrals</p>
+      <p style="font-size:28px; font-weight:700; margin-bottom:4px;">1-2/month</p>
+      <p class="text-green" style="font-size:20px; font-weight:600;">&pound;75K-150K/year</p>
+      <p class="text-secondary" style="font-size:13px; margin-top:4px;">Dream 200 + multi-channel value outreach</p>
+    </div>
+  </div>
+
+  <div class="glow-card mb-32">
+    <p class="eyebrow mb-12" style="color:var(--text-secondary);">CONSERVATIVE MONTHLY FLOOR</p>
+    <p style="font-size:40px; font-weight:700; margin-bottom:8px;">5-8 qualified conversations/month</p>
+    <p style="font-size:32px; font-weight:700; color:var(--green);">&pound;375K-600K+ in new annual pipeline</p>
+  </div>
+
+  <div class="card card-green text-center mb-24" style="padding:24px;">
+    <p style="font-size:20px; font-weight:600; margin-bottom:8px;">Your close rate is already high. You just need more at-bats.</p>
+    <p style="font-size:16px; color:var(--text-secondary);">At &pound;75K-150K average engagement and your close rate, even <strong style="color:var(--text);">2-3 new private equity clients in 90 days</strong> generates &pound;150K-450K in new revenue. <strong style="color:var(--green);">And in private equity, one portfolio company win rolls across the entire fund.</strong></p>
+  </div>
+
+  <div class="card text-center">
+    <p class="text-secondary mb-16" style="font-size:18px;">What this actually takes:</p>
+    <div class="grid-3">
+      <div class="stat" style="padding:12px;">
+        <p class="num" style="font-size:36px;">200</p>
+        <p class="label">emails per day</p>
+      </div>
+      <div class="stat" style="padding:12px;">
+        <p class="num text-green" style="font-size:36px;">100</p>
+        <p class="label">LinkedIn connects per week</p>
+      </div>
+      <div class="stat" style="padding:12px;">
+        <p class="num text-accent" style="font-size:36px;">&pound;100K+</p>
+        <p class="label">average engagement value</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 19: CASE STUDY - CREATESTUDIO -->
+<div class="slide" data-slide="19">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Case Study</p>
+  <h2 class="text-center mb-4">CreateStudio</h2>
+  <p class="text-secondary text-center mb-24" style="font-size:20px;">AI Explainer Video Creator</p>
+  <div class="quote-card mb-24">
+    <p>"Created a sales funnel that generated $3M+ in revenue, increasing enterprise value and enabling a multiple 7-figure exit"</p>
+  </div>
+  <div class="mb-24">
+    <a href="https://www.youtube.com/watch?v=BExJ1GF4SOU" target="_blank" style="display:block; position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+      <img src="https://img.youtube.com/vi/BExJ1GF4SOU/maxresdefault.jpg" alt="CreateStudio case study video" style="width:100%; display:block;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:68px; height:48px; background:rgba(0,0,0,0.75); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+        <div style="width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px;"></div>
+      </div>
+    </a>
+  </div>
+  <ul class="bullet-list mb-24">
+    <li>Increased revenue by <strong>$600,000/month</strong> in under 12 months</li>
+    <li>Built top 5 performing YouTube ads in their category</li>
+    <li>Generated <strong>$100,000 from stage</strong> and <strong>$336,000 total</strong> from a single campaign</li>
+    <li>Led the offer, ad, and funnel rebuild that enabled a <strong>7-figure exit</strong></li>
+  </ul>
+  <div class="img-row">
+    <img src="assets/createstudio_3.png" alt="CreateStudio proof" class="proof-img">
+    <img src="assets/createstudio_5.png" alt="CreateStudio revenue" class="proof-img">
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 20: CASE STUDY - RIPPLE -->
+<div class="slide" data-slide="20">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Case Study</p>
+  <h2 class="text-center mb-4">Ripple</h2>
+  <p class="text-secondary text-center mb-24" style="font-size:20px;">AI Logistics Platform</p>
+  <div class="quote-card mb-24">
+    <p>"3x closed deals in the first 60 days."</p>
+  </div>
+  <div class="mb-24">
+    <a href="https://www.youtube.com/watch?v=aY_y9TyVK2Q" target="_blank" style="display:block; position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+      <img src="https://img.youtube.com/vi/aY_y9TyVK2Q/maxresdefault.jpg" alt="Ripple case study video" style="width:100%; display:block;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:68px; height:48px; background:rgba(0,0,0,0.75); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+        <div style="width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px;"></div>
+      </div>
+    </a>
+  </div>
+  <ul class="bullet-list mb-24">
+    <li><strong>3x closed deals</strong> in the first 60 days of working together</li>
+    <li>Broke free from investor dependency — revenue now comes from outbound pipeline</li>
+    <li>Went from zero outbound to a <strong>predictable pipeline</strong> generating qualified conversations every week</li>
+    <li>Same problem as OpEx Global: world-class product, zero distribution. We installed the engine.</li>
+  </ul>
+  <div class="card card-green text-center" style="padding:16px;">
+    <p style="font-size:15px;"><strong>Before us: waiting for investors to make introductions. After us: closing deals from outbound every month.</strong></p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 22: CASE STUDY - GOLDPHISH -->
+<div class="slide" data-slide="21">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Case Study</p>
+  <h2 class="text-center mb-4">Goldphish</h2>
+  <p class="text-secondary text-center mb-24" style="font-size:20px;">Cybersecurity Awareness Training Platform</p>
+  <div class="quote-card mb-24">
+    <p>"Dramatically increased lead flow volume and quality."</p>
+  </div>
+  <div class="mb-24">
+    <a href="https://www.youtube.com/watch?v=zbu8fe9pvrg" target="_blank" style="display:block; position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--card-border);">
+      <img src="https://img.youtube.com/vi/zbu8fe9pvrg/maxresdefault.jpg" alt="Goldphish case study video" style="width:100%; display:block;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:68px; height:48px; background:rgba(0,0,0,0.75); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+        <div style="width:0; height:0; border-left:18px solid #fff; border-top:11px solid transparent; border-bottom:11px solid transparent; margin-left:4px;"></div>
+      </div>
+    </a>
+  </div>
+  <ul class="bullet-list mb-24">
+    <li>Dramatically increased <strong>lead flow volume and quality</strong> across multiple channels</li>
+    <li>Installed a scalable growth engine: podcast, LinkedIn, cold email running simultaneously</li>
+    <li>Built a <strong>predictable channel partner pipeline</strong> targeting managed service providers and cybersecurity consultants</li>
+    <li>United Kingdom-based business selling into global markets — same geography as OpEx Global</li>
+  </ul>
+  <div class="card card-green text-center" style="padding:16px;">
+    <p style="font-size:15px;"><strong>Same pattern: expert team, invisible to the market. We made them visible. Pipeline followed.</strong></p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 23: ODF LIVE SYSTEM -->
+<div class="slide" data-slide="22">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Case Study: Live System</p>
+  <h2 class="text-center mb-4">On Demand Fulfillment</h2>
+  <p class="text-secondary text-center mb-24" style="font-size:20px;">Done-for-You Supplement Fulfillment</p>
+  <div class="quote-card mb-24">
+    <p>Many of these AI tools are cutting-edge and brand new. We are already running parts of this system live. Here is the proof.</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:16px;">
+    <img src="assets/odf-n8n-196-nodes.png" alt="196-node AI workflow" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">196-node AI workflow: lead capture, deduplication, enrichment, qualification, personalised response, booking, alerts</p>
+  </div>
+  <div style="border-radius:12px; overflow:hidden; border:1px solid var(--card-border); margin-bottom:24px;">
+    <img src="assets/odf-calendar.png" alt="Calendly bookings" style="width:100%; display:block;">
+    <p class="text-secondary" style="font-size:12px; padding:8px 12px; background:var(--card);">Live calendar: AI-booked discovery calls coming in automatically from the outbound engine</p>
+  </div>
+  <div class="card card-green text-center" style="padding:16px;">
+    <p style="font-size:15px;"><strong>This is not a concept. It is running in production right now.</strong> The same system, customised for private equity outreach, is what we deploy for OpEx Global.</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 24: VALUE STACK -->
+<div class="slide" data-slide="23">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Everything You Get</p>
+  <h2 class="text-center mb-32">&#x1F48E; The Complete Growth System</h2>
+
+  <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent); margin-bottom:16px;">Pillar 1: Positioning &amp; Podcast-Led Authority</p>
+  <div class="card card-sm mb-24" style="padding:20px 28px;">
+    <div class="value-line"><span>Value Proposition Workshop: offer, messaging, and ideal client profile definition <span style="color:var(--green); font-weight:600;">(included free)</span></span><span style="color:var(--accent); font-weight:600;"><s>&pound;500</s> FREE</span></div>
+    <div class="value-line"><span>Podcast launch, production, and guest outreach to private equity operating partners</span><span style="color:var(--accent); font-weight:600;">&pound;2,500/month</span></div>
+    <div class="value-line"><span>Ideal client profile research for private equity firms across the United Kingdom and Europe</span><span style="color:var(--accent); font-weight:600;">&pound;1,500</span></div>
+    <div class="value-line"><span>Case study packaging (General Electric, HSBC, Xchanging, Generali)</span><span style="color:var(--accent); font-weight:600;">&pound;1,000</span></div>
+    <div class="value-line"><span>LinkedIn thought leadership content engine</span><span style="color:var(--accent); font-weight:600;">&pound;1,000/month</span></div>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent); margin-bottom:16px;">Pillar 2: AI-Powered Outbound Engine</p>
+  <div class="card card-sm mb-24" style="padding:20px 28px;">
+    <div class="value-line"><span>LinkedIn outbound managed campaign (400-600/month)</span><span style="color:var(--accent); font-weight:600;">&pound;2,500/month</span></div>
+    <div class="value-line"><span>Cold email infrastructure and campaigns (200/day)</span><span style="color:var(--accent); font-weight:600;">&pound;2,000/month</span></div>
+    <div class="value-line"><span>Lead enrichment engine and AI reply classification</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+    <div class="value-line"><span>Speed-to-lead workflow (under 60 second response)</span><span style="color:var(--accent); font-weight:600;">&pound;400/month</span></div>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent); margin-bottom:16px;">Pillar 3: Pipeline Tracking &amp; Sales Enablement</p>
+  <div class="card card-sm mb-24" style="padding:20px 28px;">
+    <div class="value-line"><span>Pipeline manager dashboard: every firm tracked</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+    <div class="value-line"><span>AI sales call analyser: scores calls, gives coaching</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+    <div class="value-line"><span>Smart multi-channel follow-up sequences</span><span style="color:var(--accent); font-weight:600;">&pound;400/month</span></div>
+    <div class="value-line"><span>Weekly reporting and pipeline reviews</span><span style="color:var(--accent); font-weight:600;">&pound;400/month</span></div>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-secondary); margin-bottom:16px;">AI Agent Fleet (6 Agents)</p>
+  <div class="card card-sm mb-24" style="padding:20px 28px;">
+    <div class="value-line"><span>&#x1F4EC; Dash (Inbox Monitor and Auto-Reply)</span><span style="color:var(--accent); font-weight:600;">&pound;1,500/month</span></div>
+    <div class="value-line"><span>&#x1F50D; Scout (Lead Research and Qualification)</span><span style="color:var(--accent); font-weight:600;">&pound;1,200/month</span></div>
+    <div class="value-line"><span>&#x1F3AF; Keenan (Sales Coach)</span><span style="color:var(--accent); font-weight:600;">&pound;1,200/month</span></div>
+    <div class="value-line"><span>&#x1F4E1; Maverick (Campaign Manager)</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+    <div class="value-line"><span>&#x270D;&#xFE0F; Echo (Content Engine)</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+    <div class="value-line"><span>&#x1F575;&#xFE0F; Sherlock (Deep Research)</span><span style="color:var(--accent); font-weight:600;">&pound;800/month</span></div>
+  </div>
+
+  <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--green); margin-bottom:16px;">Free Bonuses</p>
+  <div class="card card-sm mb-32" style="padding:20px 28px; border-color:rgba(34,197,94,0.15);">
+    <div class="value-line"><span>&#x1F310; Dedicated Client Portal (opexglobal.dopaminedigital.io)</span><span style="color:var(--green); font-weight:600;">&pound;500-700/month</span></div>
+    <div class="value-line"><span>&#x1F3E0; Mission Control Dashboard</span><span style="color:var(--green); font-weight:600;">&pound;600/month</span></div>
+  </div>
+
+  <div class="glow-card text-center">
+    <p class="text-secondary mb-8" style="font-size:16px;">90-DAY TOTAL VALUE</p>
+    <p style="font-size:48px; font-weight:700;">&pound;52,000+</p>
+    <p class="text-accent mt-12" style="font-size:20px; font-weight:600;">Your investment &rarr; see next slide</p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 25: GUARANTEE -->
+<div class="slide center-v" data-slide="24">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Our Promise</p>
+  <h2 class="text-center mb-32">&#x1F6E1;&#xFE0F; Results, or We Work for Free</h2>
+
+  <h3 class="text-center mb-32" style="font-size:28px;">Our Guarantee to Paul</h3>
+
+  <div class="grid-2 mb-32" style="gap:24px;">
+    <div class="card text-center" style="padding:40px 28px; border-color:rgba(34,197,94,0.2);">
+      <p style="font-size:52px; font-weight:700; color:var(--green); line-height:1;">15+</p>
+      <p style="font-size:17px; margin-top:12px; font-weight:600;">Qualified Conversations</p>
+      <p class="text-secondary" style="font-size:14px; margin-top:4px;">with private equity operating partners and portfolio company leaders who match your ideal client profile</p>
+    </div>
+    <div class="card text-center" style="padding:40px 28px; border-color:rgba(34,197,94,0.2);">
+      <p style="font-size:52px; font-weight:700; color:var(--green); line-height:1;">&pound;150K+</p>
+      <p style="font-size:17px; margin-top:12px; font-weight:600;">Pipeline Created</p>
+      <p class="text-secondary" style="font-size:14px; margin-top:4px;">10x return on your &pound;15K investment</p>
+    </div>
+  </div>
+
+  <div class="card card-green text-center mb-32" style="padding:32px;">
+    <p style="font-size:19px; line-height:1.7; max-width:640px; margin:0 auto;">If we do not hit these targets, we continue working at no additional cost until we do. <strong>The risk is entirely on us.</strong></p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card text-center" style="padding:28px;">
+      <p class="text-secondary mb-8" style="font-size:15px;">One private equity engagement is</p>
+      <p style="font-size:28px; font-weight:700; margin-bottom:4px;"><span class="text-green">&pound;75K-200K+</span></p>
+      <p class="text-secondary" style="font-size:15px;">And rolls across the entire portfolio. <strong class="text-green">One client pays for the engagement many times over.</strong></p>
+    </div>
+    <div class="card text-center" style="padding:28px;">
+      <p class="text-secondary mb-8" style="font-size:15px;">Your daily investment</p>
+      <p style="font-size:28px; font-weight:700; margin-bottom:4px;">&pound;167<span style="font-size:16px; font-weight:400; color:var(--text-secondary);">/day</span></p>
+      <p class="text-secondary" style="font-size:15px;">for a 5-person team + 6 AI agents</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 26: INVESTMENT -->
+<div class="slide" data-slide="25">
+<div class="slide-inner">
+  <p class="eyebrow text-center">Investment</p>
+  <h2 class="text-center mb-12">&#x1F4BC; Choose How You Would Like to Start</h2>
+  <p class="subtitle text-center mb-32">Every month without a system costs &pound;41,000 in unrealised revenue. The investment below is &pound;5,000 per month. One closed deal pays for the entire engagement.</p>
+
+  <div style="display:flex; gap:24px; margin-bottom:32px;">
+    <div class="pricing-card" style="flex:1;">
+      <h3 style="font-size:20px; margin-bottom:24px;">Option A: Monthly</h3>
+      <p style="font-size:48px; font-weight:700; line-height:1;">&pound;6,000</p>
+      <p style="font-size:16px; color:var(--text-secondary); margin-bottom:4px;">per month</p>
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px;">3 months &times; &pound;6,000 = <strong style="color:var(--text);">&pound;18,000 total</strong></p>
+      <div style="border-top:1px solid var(--card-border); padding-top:20px;">
+        <ul class="check-list text-left" style="font-size:13px;">
+          <li>Full system build + 90 days execution</li>
+          <li>All 3 pillars + 6 AI agents</li>
+          <li>15+ conversations guaranteed</li>
+          <li>&pound;150K+ pipeline guaranteed</li>
+          <li>You own the pipeline, leads, domains, scripts, and templates</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pricing-card featured" style="flex:1; position:relative;">
+      <div class="pricing-badge">Recommended</div>
+      <h3 style="font-size:20px; margin-bottom:24px;">Option B: Pay in Full</h3>
+      <p style="font-size:48px; font-weight:700; color:var(--accent); line-height:1;">&pound;5,000</p>
+      <p style="font-size:16px; color:var(--text-secondary); margin-bottom:4px;">per month</p>
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:8px;">Charged as a single payment of <strong style="color:var(--text);">&pound;15,000</strong></p>
+      <div style="display:inline-block; font-size:13px; font-weight:700; color:var(--green); background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); border-radius:20px; padding:4px 14px; margin-bottom:20px;">Save &pound;3,000 vs monthly</div>
+      <div style="border-top:1px solid var(--card-border); padding-top:20px;">
+        <ul class="check-list text-left" style="font-size:13px;">
+          <li>Everything in Option A, plus:</li>
+          <li>Full Client Portal access with all documentation</li>
+          <li>AI agent prompts, instructions, and playbooks</li>
+          <li>Complete intellectual property handover</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-violet mb-24">
+    <h4 class="text-accent mb-8">Minimum Viable Dose</h4>
+    <p class="text-secondary" style="font-size:16px; line-height:1.6;">Your first &pound;6,000 gets the Value Proposition Workshop plus complete infrastructure: warmed domains, purchased inboxes, scripts, templates, LinkedIn setup, Dream 200 list. <strong style="color:var(--text);">You own the pipeline, the leads, the domains, and every asset we build.</strong> Pay in full and you also get the complete Client Portal: all documentation, AI agent prompts, instructions, and playbooks.</p>
+  </div>
+
+  <div class="card card-sm text-center" style="background:rgba(255,255,255,0.02);">
+    <div class="grid-3" style="gap:16px; font-size:15px;">
+      <div>
+        <p class="text-red" style="font-weight:600;">Hire Internally</p>
+        <p>&pound;12-18K/month</p>
+        <p class="text-secondary small">(business development hire + tools)</p>
+        <p class="text-secondary small">No guarantee</p>
+      </div>
+      <div>
+        <p class="text-green" style="font-weight:600;">With Us</p>
+        <p>&pound;5K/month</p>
+        <p class="text-secondary small">(5-person team + AI + guarantee)</p>
+      </div>
+      <div>
+        <p class="text-accent" style="font-weight:600;">Daily Cost</p>
+        <p>&pound;167/day</p>
+        <p class="text-secondary small">(&pound;15,000 &divide; 90 days)</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 27: 90-DAY TIMELINE -->
+<div class="slide" data-slide="26">
+<div class="slide-inner">
+  <p class="eyebrow text-center">90-Day Sprint</p>
+  <h2 class="text-center mb-32">&#x1F5D3;&#xFE0F; Your 90-Day Growth Sprint</h2>
+
+  <div style="display:flex; flex-direction:column; gap:20px;">
+    <div class="card" style="border-left:4px solid var(--accent); padding:24px 28px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <span style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--accent);">DAYS 1-7</span>
+        <h4 style="font-size:18px;">Kickoff &amp; Strategy</h4>
+      </div>
+      <ul style="font-size:15px; line-height:1.6; padding-left:20px; color:var(--text-secondary); columns:2; column-gap:40px;">
+        <li><strong style="color:var(--green);">Value Proposition Workshop:</strong> define offer, messaging, and ideal client profile together</li>
+        <li>Dream 200 list: hand-select top 200 private equity firms in the United Kingdom and Europe</li>
+        <li>Package General Electric, HSBC, Xchanging, Generali case studies for outbound</li>
+        <li>Podcast concept and positioning around "process before AI"</li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:4px solid var(--accent); padding:24px 28px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <span style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--accent);">DAYS 8-14</span>
+        <h4 style="font-size:18px;">Infrastructure Build</h4>
+      </div>
+      <ul style="font-size:15px; line-height:1.6; padding-left:20px; color:var(--text-secondary); columns:2; column-gap:40px;">
+        <li>Purchase and configure 8-12 email domains</li>
+        <li>Begin inbox warmup (14-day cycle)</li>
+        <li>LinkedIn profiles set up via HeyReach</li>
+        <li>Pipeline system configured in full</li>
+        <li>All 6 AI agents deployed and tested</li>
+        <li>Email sequences and podcast invitation scripts created</li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:4px solid var(--amber); padding:24px 28px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <span style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--amber);">DAYS 15-30</span>
+        <h4 style="font-size:18px;">Systems Go Live</h4>
+      </div>
+      <ul style="font-size:15px; line-height:1.6; padding-left:20px; color:var(--text-secondary); columns:2; column-gap:40px;">
+        <li>Podcast invitation outreach launches to Dream 200 operating partners</li>
+        <li>Cold emails live: 200 new private equity professionals per day</li>
+        <li>LinkedIn outreach: 100 connects per week</li>
+        <li>First meetings booked with private equity operating partners</li>
+      </ul>
+      <p style="font-size:14px; color:var(--green); font-weight:600; font-style:italic; margin-top:10px;">All infrastructure delivered. You own everything we build.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--amber); padding:24px 28px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <span style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--amber);">DAYS 31-60</span>
+        <h4 style="font-size:18px;">Optimise &amp; Expand</h4>
+      </div>
+      <ul style="font-size:15px; line-height:1.6; padding-left:20px; color:var(--text-secondary); columns:2; column-gap:40px;">
+        <li>Split-test messaging, scale what converts</li>
+        <li>Expand targeting to European private equity firms</li>
+        <li>Smart follow-up sequences live for cold leads</li>
+        <li>Refine targeting based on real response data</li>
+      </ul>
+    </div>
+    <div class="card" style="border-left:4px solid var(--green); padding:24px 28px;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <span style="font-size:13px; font-weight:700; letter-spacing:0.1em; color:var(--green);">DAYS 61-90</span>
+        <h4 style="font-size:18px;">Full Scale</h4>
+      </div>
+      <ul style="font-size:15px; line-height:1.6; padding-left:20px; color:var(--text-secondary); columns:2; column-gap:40px;">
+        <li>15+ qualified conversations achieved</li>
+        <li>&pound;150K+ pipeline created</li>
+        <li>Podcast producing weekly authority content</li>
+        <li>Full pipeline review, double down on best segments</li>
+      </ul>
+      <p style="font-size:14px; color:var(--green); font-weight:600; font-style:italic; margin-top:10px;">Decision: continue, expand, or graduate</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 28: COST RE-ANCHOR — £41K vs £5K -->
+<div class="slide center-v" data-slide="27">
+<div class="slide-inner">
+  <p class="eyebrow text-center">The Decision</p>
+  <h2 class="text-center mb-32">&#x1F4B0; Remember What Inaction Costs</h2>
+
+  <div style="display:flex; gap:24px; margin-bottom:32px; align-items:stretch;">
+    <div class="card text-center" style="flex:1; padding:40px; border:2px solid rgba(239,68,68,0.4);">
+      <p style="font-size:13px; font-weight:700; color:var(--red); letter-spacing:0.1em; margin-bottom:16px;">COST OF DOING NOTHING</p>
+      <p style="font-size:72px; font-weight:700; color:var(--red); line-height:1;">&pound;41K</p>
+      <p style="font-size:18px; color:var(--text-secondary); margin-top:8px;">per month</p>
+      <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(239,68,68,0.2);">
+        <p style="font-size:15px; color:var(--text-secondary); line-height:1.6;">&pound;500K+ per year in unrealised revenue.<br>5-7 deals lost. Every private equity firm that buys<br>from someone else is a fund you never enter.</p>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; font-size:32px; color:var(--text-secondary); font-weight:300;">vs</div>
+    <div class="card text-center" style="flex:1; padding:40px; border:2px solid rgba(34,197,94,0.4);">
+      <p style="font-size:13px; font-weight:700; color:var(--green); letter-spacing:0.1em; margin-bottom:16px;">COST TO FIX IT</p>
+      <p style="font-size:72px; font-weight:700; color:var(--green); line-height:1;">&pound;5K</p>
+      <p style="font-size:18px; color:var(--text-secondary); margin-top:8px;">per month</p>
+      <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(34,197,94,0.2);">
+        <p style="font-size:15px; color:var(--text-secondary); line-height:1.6;">5-person team. 6 AI agents. 3 outbound channels.<br>Value Proposition Workshop. Pipeline system.<br><strong style="color:var(--green);">One deal pays for the entire engagement.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-green text-center" style="padding:24px;">
+    <p style="font-size:20px; font-weight:700; line-height:1.5;">You are spending &pound;41,000 per month on this problem whether you pay for a solution or not.<br><span style="color:var(--green);">The only question is whether you keep paying it in lost revenue, or invest &pound;5,000 to fix it.</span></p>
+  </div>
+</div>
+</div>
+
+<!-- SLIDE 29: CLOSE + FAQ -->
+<div class="slide" data-slide="28">
+<div class="slide-inner">
+  <h1 class="text-center" style="font-size:44px; margin-bottom:12px;">&#x1F91D; Which Option Makes Sense for You?</h1>
+  <p class="subtitle text-center mb-32" style="font-size:18px;">I have space on my calendar <strong>this week</strong> for the onboarding call. I will send over contracts and the first invoice today.</p>
+
+  <div class="grid-2 mb-32">
+    <div class="pricing-card" style="padding:28px;">
+      <h4 style="font-size:18px; margin-bottom:16px;">Monthly Payment</h4>
+      <p style="font-size:36px; font-weight:700; line-height:1;">&pound;6,000</p>
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:16px;">per month &times; 3 = &pound;18,000 total</p>
+      <ul class="check-list text-left" style="font-size:14px;">
+        <li>Full system build + 90 days execution</li>
+        <li>15+ conversations guaranteed</li>
+        <li>Own pipeline, leads, domains, scripts</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured" style="padding:28px;">
+      <div class="pricing-badge">Recommended</div>
+      <h4 style="font-size:18px; margin-bottom:16px;">Pay in Full</h4>
+      <p style="font-size:36px; font-weight:700; color:var(--accent); line-height:1;">&pound;5,000</p>
+      <p style="font-size:14px; color:var(--text-secondary); margin-bottom:4px;">per month, charged as &pound;15,000</p>
+      <p style="font-size:14px; font-weight:600; color:var(--green); margin-bottom:16px;">Save &pound;3,000 vs monthly</p>
+      <ul class="check-list text-left" style="font-size:14px;">
+        <li>Everything in Monthly, plus:</li>
+        <li>Full Client Portal + documentation</li>
+        <li>AI agent prompts and playbooks</li>
+        <li>Complete IP handover</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-green text-center mb-32" style="padding:28px;">
+    <p style="font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--green); margin-bottom:12px;">Our Guarantee</p>
+    <div style="display:flex; justify-content:center; align-items:center; gap:32px; flex-wrap:wrap;">
+      <div>
+        <p style="font-size:36px; font-weight:700; color:var(--green);">15+</p>
+        <p style="font-size:14px;">Qualified Conversations</p>
+      </div>
+      <div style="width:1px; height:48px; background:rgba(34,197,94,0.3);"></div>
+      <div>
+        <p style="font-size:36px; font-weight:700; color:var(--green);">&pound;150K+</p>
+        <p style="font-size:14px;">Pipeline Created</p>
+      </div>
+    </div>
+    <p style="font-size:15px; margin-top:16px; color:var(--text-secondary);">If we do not hit these targets, we continue working at no additional cost. <strong style="color:var(--text);">The risk is entirely on us.</strong></p>
+  </div>
+
+  <h4 class="mb-16 text-center" style="font-size:18px; color:var(--text-secondary);">Common Questions</h4>
+
+  <details class="faq-item">
+    <summary>What if my offer and messaging are not clear yet?</summary>
+    <div class="faq-body">That is exactly what the Value Proposition Workshop solves in week one. We define your offer, nail the messaging, and lock your ideal client profile together before a single message goes out. Then the outreach itself becomes the testing ground. Real replies from real operating partners tell us what resonates. You do not need a perfect offer on day one. You need a strong starting point, and we refine from there.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>What if I have tried outreach before and it did not work?</summary>
+    <div class="faq-body">Manual LinkedIn reconnections are limited by your existing network. We are reaching thousands of private equity professionals who have never heard of OpEx Global. Different channel, different scale, guaranteed results. Your network still works. We are adding a systematic engine on top.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>How much of my time does this require?</summary>
+    <div class="faq-body">Minimal. We handle outreach, follow-up, pipeline management, content creation, and nurture sequences. You show up to meetings when qualified private equity professionals are ready to discuss operational excellence. Weekly 30-minute check-in. You focus on what you are already great at: the work itself.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>What happens after 90 days?</summary>
+    <div class="faq-body">You own everything we have built: the domains, the scripts, the pipeline system, the AI automations, the podcast infrastructure. Continue with us (scale across Europe), bring it in-house, or graduate. The infrastructure is yours regardless.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>I am a solo consultant. Can I handle more clients?</summary>
+    <div class="faq-body">That is exactly what the systems are for. The AI handles lead management, follow-up, and nurture. You focus on delivery. The pipeline system tracks everything so nothing falls through the cracks. And with your close rate, you can be selective about which engagements to take.</div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Why private equity specifically?</summary>
+    <div class="faq-body">Because the mathematics are extraordinary. Each pound you save a portfolio company is worth 10 times at the fund multiple. One win in a single portfolio company means rollout across the entire fund. TDR Capital already proved this works for you. We are building the system to replicate it across hundreds of firms.</div>
+  </details>
+
+  <p class="text-center mt-20 muted" style="font-size:13px;">Prepared by Dopamine Digital &middot; dopaminedigital.io</p>
+</div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Navigation -->
+<div class="nav-bar" id="navBar"></div>
+<div class="nav-counter" id="navCounter">1 / 28</div>
+
+<script>
+(function() {
+  var deck = document.getElementById('deck');
+  var slides = deck.querySelectorAll('.slide');
+  var navBar = document.getElementById('navBar');
+  var navCounter = document.getElementById('navCounter');
+  var totalSlides = slides.length;
+  var currentSlide = 1;
+
+  for (var i = 1; i <= totalSlides; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+    dot.setAttribute('data-slide', i);
+    (function(n) {
+      dot.addEventListener('click', function() { goToSlide(n); });
+    })(i);
+    navBar.appendChild(dot);
+  }
+
+  function goToSlide(n) {
+    if (n < 1 || n > totalSlides) return;
+    for (var i = 0; i < slides.length; i++) {
+      slides[i].classList.remove('active');
+    }
+    var dots = navBar.querySelectorAll('.nav-dot');
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].classList.remove('active');
+    }
+    currentSlide = n;
+    slides[currentSlide - 1].classList.add('active');
+    slides[currentSlide - 1].scrollTop = 0;
+    dots[currentSlide - 1].classList.add('active');
+    navCounter.textContent = currentSlide + ' / ' + totalSlides;
+  }
+
+  function nextSlide() { goToSlide(currentSlide + 1); }
+  function prevSlide() { goToSlide(currentSlide - 1); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      prevSlide();
+    }
+  });
+})();
+</script>
+</body>
+</html>
